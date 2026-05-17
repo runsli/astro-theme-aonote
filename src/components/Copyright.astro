@@ -1,0 +1,38 @@
+---
+import { site } from '../site.config';
+import {
+  formatCopyrightBlock,
+  getCopyrightNotice,
+  getLicenseIcon,
+  shouldShowCopyright,
+} from '../utils/copyright';
+import { t } from '../i18n';
+
+interface Props {
+  postTitle: string;
+  canonicalUrl: string;
+}
+
+const { postTitle, canonicalUrl } = Astro.props;
+const locale = site.language;
+const i18n = t(locale);
+const cfg = site.copyright;
+
+const show = shouldShowCopyright(cfg);
+const notice = show ? getCopyrightNotice(cfg.type.replace(/\./g, '_'), locale) : '';
+const icon = show && cfg.showLicenseIcon ? getLicenseIcon(cfg.type.replace(/\./g, '_')) : null;
+const formatBlock = formatCopyrightBlock(postTitle, site.author, canonicalUrl, locale);
+---
+
+{show && (
+<aside class="post-copyright" aria-label="Copyright">
+  {icon && <span class="license-icon" aria-hidden="true">{icon}</span>}
+  {notice && <p class="copyright-notice">{notice}</p>}
+  {cfg.additionalNote || i18n.copyrightAdditionalNote ? (
+    <p class="copyright-note">{cfg.additionalNote || i18n.copyrightAdditionalNote}</p>
+  ) : null}
+  {cfg.showStandardFormat && (
+    <pre class="copyright-format"><code>{formatBlock}</code></pre>
+  )}
+</aside>
+)}

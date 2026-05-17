@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { site } from '../../site.config';
+import { t } from '../../i18n';
+import { getPublishedPosts } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const blogPosts = posts.filter((p) => {
+    const slug = p.id.replace(/\.mdx?$/, '');
+    return !['about', '404'].includes(slug);
+  });
+  const tagSet = new Set<string>();
+  for (const post of blogPosts) {
+    for (const tag of post.data.tags) tagSet.add(tag);
+  }
+  return [...tagSet].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: blogPosts.filter((p) => p.data.tags.includes(tag)),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const i18n = t(site.language);
+---
+
+<BaseLayout title={`${i18n.navTags}: ${tag}`} pageId="tag">
+  <header class="tag-header">
+    <h1>{tag}</h1>
+    <p>{i18n.tagPostCount(posts.length)}</p>
+    <p><a href="/tags/">← {i18n.allTags}</a></p>
+  </header>
+  <section class="post-list">
+    {posts.length === 0 ? (
+      <p class="empty-state">{i18n.noPosts}</p>
+    ) : (
+      posts.map((post) => <PostCard post={post} />)
+    )}
+  </section>
+</BaseLayout>

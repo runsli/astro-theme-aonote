@@ -1,0 +1,98 @@
+---
+import '../styles/aonote.css';
+import 'katex/dist/katex.min.css';
+import { site } from '../site.config';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  pageId?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  pageId = 'page',
+  canonicalUrl,
+  noindex = false,
+} = Astro.props;
+
+const locale = site.language as Locale;
+const i18n = t(locale);
+const siteRoot = site.repoSubpath.replace(/\/$/, '');
+const homeHref = siteRoot ? `${siteRoot}/` : '/';
+const currentPath = Astro.url.pathname;
+const year = new Date().getFullYear();
+
+function navHref(path: string) {
+  const base = siteRoot || '';
+  return `${base}${path}`;
+}
+
+function isActive(path: string) {
+  const normalized = path.endsWith('/') ? path : `${path}/`;
+  return currentPath === normalized || currentPath.startsWith(normalized);
+}
+---
+
+<!doctype html>
+<html lang={i18n.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} - {site.title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:title" content={`${title} - ${site.title}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={pageId === 'post' ? 'article' : 'website'} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <meta name="twitter:card" content="summary" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.title} RSS`} href={navHref('/rss.xml')} />
+    <link rel="alternate" type="application/atom+xml" title={`${site.title} Atom`} href={navHref('/atom.xml')} />
+  </head>
+  <body class:list={[`page-${pageId}`]}>
+    <a class="skip-link" href="#main-content">{i18n.skipToContent}</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href={homeHref}>{site.title}</a>
+        <nav class="site-nav" aria-label={i18n.mainNavigation}>
+          <a href={navHref('/')} class:list={[{ active: isActive('/') && pageId === 'index' }]}>{i18n.navHome}</a>
+          <a href={navHref('/archive/')} class:list={[{ active: isActive('/archive') }]}>{i18n.navArchive}</a>
+          <a href={navHref('/tags/')} class:list={[{ active: isActive('/tags') }]}>{i18n.navTags}</a>
+          <a href={navHref('/about/')} class:list={[{ active: isActive('/about') }]}>{i18n.navAbout}</a>
+        </nav>
+        <details class="mobile-nav">
+          <summary>{i18n.navMenu}</summary>
+          <nav aria-label={i18n.mainNavigation}>
+            <a href={navHref('/')}>{i18n.navHome}</a>
+            <a href={navHref('/archive/')}>{i18n.navArchive}</a>
+            <a href={navHref('/tags/')}>{i18n.navTags}</a>
+            <a href={navHref('/about/')}>{i18n.navAbout}</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <div class="page-layout">
+      <main id="main-content" class="main-content">
+        <slot />
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>© {year} {site.author}.</p>
+        <p class="footer-links">
+          <a href={navHref('/rss.xml')}>{i18n.rssSubscribe}</a>
+          <a href="#top">{i18n.backToTop}</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

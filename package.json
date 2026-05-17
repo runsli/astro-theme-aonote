@@ -1,0 +1,38 @@
+{
+  "name": "astro-theme-aonote",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Aonote — minimal no-JS blog theme for Astro, ported from Runsli/Aonote",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "no-js",
+    "static-site",
+    "aonote"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.14.1"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.15",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.7.10",
+    "rehype-external-links": "^3.0.0",
+    "rehype-katex": "^7.0.1",
+    "katex": "^0.16.22",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "typescript": "^5.8.3"
+  }
+}

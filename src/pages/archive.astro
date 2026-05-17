@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site.config';
+import { t } from '../i18n';
+import { formatDate, getPublishedPosts, groupPostsByYear, postUrl } from '../utils/posts';
+
+const posts = await getPublishedPosts();
+const blogPosts = posts.filter((p) => {
+  const slug = p.id.replace(/\.mdx?$/, '');
+  return !['about', '404'].includes(slug);
+});
+const byYear = groupPostsByYear(blogPosts);
+const i18n = t(site.language);
+---
+
+<BaseLayout title={i18n.navArchive} pageId="archive">
+  <h1>{i18n.navArchive}</h1>
+  {blogPosts.length === 0 ? (
+    <p class="empty-state">{i18n.noArchive}</p>
+  ) : (
+    [...byYear.entries()].map(([year, yearPosts]) => (
+      <section class="archive-year">
+        <h2>{year}</h2>
+        <ul class="archive-list">
+          {yearPosts.map((post) => (
+            <li>
+              <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date, site.language)}</time>
+              <a href={postUrl(post)}>{post.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )}
+</BaseLayout>

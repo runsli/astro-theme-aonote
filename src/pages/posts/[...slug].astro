@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Copyright from '../../components/Copyright.astro';
+import { site } from '../../site.config';
+import { t } from '../../i18n';
+import {
+  formatDate,
+  getAdjacentPosts,
+  getPublishedPosts,
+  postUrl,
+} from '../../utils/posts';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data, id }) => {
+    const slug = id.replace(/\.mdx?$/, '');
+    return !data.draft && !['about', '404'].includes(slug);
+  });
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.mdx?$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const allPosts = await getPublishedPosts();
+const { prev, next } = getAdjacentPosts(allPosts, post);
+const i18n = t(site.language);
+const canonicalUrl = new URL(postUrl(post), Astro.site).href;
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary}
+  pageId="post"
+  canonicalUrl={canonicalUrl}
+>
+  <article class="post-article" itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="post-header">
+      <h1 itemprop="headline">{post.data.title}</h1>
+      <p class="post-meta">
+        <time datetime={post.data.date.toISOString()} itemprop="datePublished">
+          {formatDate(post.data.date, site.language)}
+        </time>
+      </p>
+      {post.data.tags.length > 0 && (
+        <ul class="post-tags">
+          {post.data.tags.map((tag) => (
+            <li>
+              <a href={`/tags/${encodeURIComponent(tag)}/`} rel="tag">{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    {tocHeadings.length > 0 && (
+      <details class="mobile-toc">
+        <summary>{i18n.toc}</summary>
+        <nav aria-label={i18n.toc}>
+          <ol>
+            {tocHeadings.map((h) => (
+              <li class={`toc-depth-${h.depth}`}>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+    )}
+
+    <div class="post-body prose" itemprop="articleBody">
+      <Content />
+    </div>
+
+    <Copyright postTitle={post.data.title} canonicalUrl={canonicalUrl} />
+
+    {(prev || next) && (
+      <nav class="post-nav" aria-label="Post navigation">
+        {prev ? (
+          <a class="post-nav-prev" href={postUrl(prev)}>
+            ← {i18n.prevPost}
+            <span class="post-nav-title">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <a class="post-nav-next" href={postUrl(next)}>
+            {i18n.nextPost} →
+            <span class="post-nav-title">{next.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )}
+      </nav>
+    )}
+  </article>
+
+  {tocHeadings.length > 0 && (
+    <aside class="sidebar-toc" aria-label={i18n.toc}>
+      <h2>{i18n.toc}</h2>
+      <nav>
+        <ol>
+          {tocHeadings.map((h) => (
+            <li class={`toc-depth-${h.depth}`}>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
+  )}
+</BaseLayout>
