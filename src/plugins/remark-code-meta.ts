@@ -16,12 +16,13 @@ export function remarkCodeMeta() {
       const rest = match[2]?.trim();
       if (rest) {
         node.meta = rest;
-        node.data = { ...(node.data ?? {}), meta: rest };
+        if (!node.data) node.data = {};
         const hlMatch = /hl_lines="([^"]*)"/.exec(rest);
         if (hlMatch) {
           const hlLines = expandHlLinesTokens(hlMatch[1]!);
+          const existing = (node.data.hProperties ?? {}) as Record<string, unknown>;
           node.data.hProperties = {
-            ...(node.data.hProperties as object),
+            ...existing,
             'data-hl-lines': hlLines.join(' '),
           };
         }

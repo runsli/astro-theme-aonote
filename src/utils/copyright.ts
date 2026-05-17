@@ -1,5 +1,8 @@
 import type { SiteConfig } from '../site.config';
 import { t, type Locale } from '../i18n';
+import type { COPYRIGHT_LICENSE_NOTICES } from '../i18n-licenses';
+
+type CopyrightLicenseKey = keyof (typeof COPYRIGHT_LICENSE_NOTICES)['zh-CN'];
 
 const LICENSE_ICONS: Record<string, string> = {
   CC_BY_4_0: 'CC-BY',
@@ -29,8 +32,11 @@ export function getCopyrightNotice(
   licenseType: string,
   locale: Locale,
 ): string {
-  const i18n = t(locale);
-  return i18n.copyrightLicenseNotices[licenseType] ?? '';
+  const notices = t(locale).copyrightLicenseNotices;
+  if (licenseType in notices) {
+    return notices[licenseType as CopyrightLicenseKey];
+  }
+  return '';
 }
 
 export function getLicenseIcon(licenseType: string): string | null {

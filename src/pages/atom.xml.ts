@@ -4,7 +4,7 @@ import { absoluteUrl } from '../utils/paths';
 import { postSlug } from '../utils/posts';
 import type { APIContext } from 'astro';
 
-export async function GET(context: APIContext) {
+export async function GET(_context: APIContext) {
   const items = await getFeedItems();
   const siteUrl = absoluteUrl('/');
   const atomUrl = absoluteUrl('/atom.xml');

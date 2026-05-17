@@ -1,5 +1,5 @@
 /**
- * Markdown preprocessors ported from runsli/Aonote parser.py
+ * Markdown preprocessors ported from Runsli/Aonote parser.py
  */
 
 const EMOTICON_EMOJI_MAP: Record<string, string> = {
@@ -150,7 +150,6 @@ export function convertEmoticonShorthands(markdown: string): string {
 
 export function normalizeFencedCodeAttributes(markdown: string): string {
   const openingRe = /^(\s*)(`{3,}|~{3,})([^\n]*)$/;
-  const titleRe = /(?:^|\s)title=(?:"[^"]*"|'[^']*'|[^\s}]+)/;
   const hlLinesRe = /hl_lines=(?:"([^"]*)"|'([^']*)'|([^\s}]+))/;
 
   const expandHlLines = (value: string) => {
@@ -181,7 +180,6 @@ export function normalizeFencedCodeAttributes(markdown: string): string {
     const fenceMatch = openingRe.exec(lineBody);
     if (!fenceMatch) return lineBody;
 
-    const indent = fenceMatch[1]!;
     const fence = fenceMatch[2]!;
     let info = fenceMatch[3]!.trim();
     const marker = fence[0]!;

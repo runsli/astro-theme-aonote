@@ -23,7 +23,7 @@ export function rehypeAonoteSlug() {
         count += 1;
         id = `${base}-${count}`;
       }
-      seen.set(id, true);
+      seen.set(id, count);
 
       node.properties = { ...node.properties, id };
     });

@@ -28,7 +28,7 @@ export function readImageDimensions(
 ): { width: number; height: number } | null {
   try {
     if (!fs.existsSync(filePath)) return null;
-    const result = sizeOf(filePath);
+    const result = sizeOf(fs.readFileSync(filePath));
     if (result.width && result.height) {
       return { width: result.width, height: result.height };
     }

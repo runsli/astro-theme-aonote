@@ -1,8 +1,21 @@
 import temml from 'temml';
-import type { Element, Root } from 'hast';
+import type { Element, ElementContent, Root, RootContent } from 'hast';
 import { fromHtml } from 'hast-util-from-html';
 import { toString } from 'mdast-util-to-string';
 import { visit } from 'unist-util-visit';
+
+function isElement(node: unknown): node is Element {
+  return (
+    typeof node === 'object' &&
+    node !== null &&
+    'type' in node &&
+    (node as { type: string }).type === 'element'
+  );
+}
+
+function toElementContent(children: RootContent[]): ElementContent[] {
+  return children.filter((child): child is ElementContent => child.type !== 'doctype');
+}
 
 function isMathCode(node: Element): boolean {
   const lang = node.properties?.className;
@@ -24,7 +37,10 @@ function wrapMathml(mathml: string, display: boolean): Element {
     type: 'element',
     tagName: display ? 'div' : 'span',
     properties: { className: ['arithmatex'] },
-    children: fragment.children.length ? fragment.children : [{ type: 'text', value: mathml }],
+    children: (() => {
+      const content = toElementContent(fragment.children);
+      return content.length ? content : [{ type: 'text', value: mathml }];
+    })(),
   };
 }
 
@@ -36,6 +52,8 @@ export function rehypeAonoteMathml() {
 
       const latex = toString(node).trim();
       if (!latex) return;
+
+      if (!isElement(parent)) return;
 
       const display = parent.tagName === 'pre';
       let mathml: string;

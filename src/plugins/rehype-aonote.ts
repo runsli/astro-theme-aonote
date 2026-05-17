@@ -38,6 +38,15 @@ function langLabel(lang: string): string {
   return LANG_LABELS[lang.toLowerCase()] ?? lang.toUpperCase();
 }
 
+function isElement(node: unknown): node is Element {
+  return (
+    typeof node === 'object' &&
+    node !== null &&
+    'type' in node &&
+    (node as { type: string }).type === 'element'
+  );
+}
+
 function hasClass(node: Element, name: string): boolean {
   const cls = node.properties?.className;
   if (!cls) return false;
@@ -136,6 +145,7 @@ function wrapTables(tree: Root, locale: Locale) {
 
   visit(tree, 'element', (node, index, parent) => {
     if (node.tagName !== 'table' || !parent || index == null) return;
+    if (!isElement(parent)) return;
     if (parent.tagName === 'div' && hasClass(parent, 'table-wrapper')) return;
 
     let captionText: string | undefined;
@@ -205,6 +215,7 @@ function wrapCodeBlocks(tree: Root, locale: Locale) {
   const i18n = t(locale);
   visit(tree, 'element', (node, index, parent) => {
     if (node.tagName !== 'pre' || !parent || index == null) return;
+    if (!isElement(parent)) return;
     if (parent.tagName === 'motion.div' && hasClass(parent, 'highlight')) return;
     if (parent.tagName === 'div' && hasClass(parent, 'highlight')) return;
 
