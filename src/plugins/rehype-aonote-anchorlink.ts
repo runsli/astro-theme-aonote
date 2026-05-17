@@ -3,18 +3,23 @@ import { toString } from 'mdast-util-to-string';
 import { visit } from 'unist-util-visit';
 import { t, type Locale } from '../i18n';
 
-function hasHeaderlink(node: Element): boolean {
+function hasClass(node: Element, name: string): boolean {
+  const cls = node.properties?.className;
+  if (!cls) return false;
+  const list = Array.isArray(cls) ? cls.map(String) : String(cls).split(/\s+/);
+  return list.includes(name);
+}
+
+function hasToclink(node: Element): boolean {
   return node.children.some(
     (child) =>
       child.type === 'element' &&
       child.tagName === 'a' &&
-      (Array.isArray(child.properties?.className)
-        ? child.properties.className.includes('headerlink')
-        : String(child.properties?.className ?? '').includes('headerlink')),
+      hasClass(child, 'toclink'),
   );
 }
 
-/** Match upstream pymdownx `toc.anchorlink`: clickable # links on headings. */
+/** Match upstream Python-Markdown `toc.anchorlink`: heading text links to its id. */
 export function rehypeAonoteAnchorlink(options: { locale?: Locale } = {}) {
   const locale = options.locale ?? 'en';
   const i18n = t(locale);
@@ -22,8 +27,10 @@ export function rehypeAonoteAnchorlink(options: { locale?: Locale } = {}) {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element) => {
       if (!/^h[2-4]$/.test(node.tagName)) return;
+      if (hasClass(node, 'sr-only')) return;
+
       const id = node.properties?.id;
-      if (!id || hasHeaderlink(node)) return;
+      if (!id || hasToclink(node)) return;
 
       const idStr = String(id);
       const label = toString(node).trim() || idStr;
@@ -32,14 +39,14 @@ export function rehypeAonoteAnchorlink(options: { locale?: Locale } = {}) {
         type: 'element',
         tagName: 'a',
         properties: {
-          className: ['headerlink'],
+          className: ['toclink'],
           href: `#${idStr}`,
           ariaLabel: i18n.headingAnchorLabel(label),
         },
-        children: [{ type: 'text', value: '#' }],
+        children: [...node.children],
       };
 
-      node.children.unshift(link);
+      node.children = [link];
     });
   };
 }
