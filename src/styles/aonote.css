@@ -552,7 +552,12 @@ main {
     margin-top: 0.8em;
 }
 
-.page-post .post-content h2 {
+.page-post .post-content h1,
+.page-post .post-content h2,
+.page-post .post-content h3,
+.page-post .post-content h4,
+.page-post .post-content h5,
+.page-post .post-content h6 {
     color: var(--color-primary);
 }
 
@@ -560,12 +565,16 @@ main {
 .page-post .post-content h4,
 .page-post .post-content h5,
 .page-post .post-content h6 {
-    color: var(--color-main-text);
     font-weight: 650;
 }
 
 @media (prefers-color-scheme: dark) {
-    .page-post .post-content h2 {
+    .page-post .post-content h1,
+    .page-post .post-content h2,
+    .page-post .post-content h3,
+    .page-post .post-content h4,
+    .page-post .post-content h5,
+    .page-post .post-content h6 {
         color: var(--color-link-dark);
     }
 }
