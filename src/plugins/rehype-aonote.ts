@@ -58,10 +58,29 @@ function isParent(node: unknown): node is Parent {
 }
 
 function hasClass(node: Element, name: string): boolean {
-  const cls = node.properties?.className;
+  const cls = node.properties?.className ?? node.properties?.class;
   if (!cls) return false;
   const list = Array.isArray(cls) ? cls.map(String) : String(cls).split(/\s+/);
   return list.includes(name);
+}
+
+function addClass(node: Element, name: string): void {
+  const cls = node.properties?.className ?? node.properties?.class;
+  const classes = Array.isArray(cls)
+    ? cls.map(String)
+    : cls
+      ? String(cls).split(/\s+/).filter(Boolean)
+      : [];
+  if (classes.includes(name)) return;
+  node.properties = {
+    ...node.properties,
+    className: [...classes, name],
+    class: undefined,
+  };
+}
+
+function hasProperty(node: Element, ...names: string[]): boolean {
+  return names.some((name) => Object.prototype.hasOwnProperty.call(node.properties ?? {}, name));
 }
 
 function extractText(node: Element): string {
@@ -308,15 +327,39 @@ function applyLineHighlights(pre: Element, lines: number[]) {
 function enhanceFootnotes(tree: Root, locale: Locale) {
   const i18n = t(locale);
   visit(tree, 'element', (node) => {
-    if (node.tagName === 'a' && hasClass(node, 'footnote-ref')) {
+    if (
+      node.tagName === 'section' &&
+      (hasClass(node, 'footnotes') || hasProperty(node, 'dataFootnotes', 'data-footnotes'))
+    ) {
+      addClass(node, 'footnote');
+    }
+
+    if (/^h[1-6]$/.test(node.tagName) && hasClass(node, 'sr-only')) {
+      addClass(node, 'visually-hidden');
+    }
+
+    if (
+      node.tagName === 'a' &&
+      (hasClass(node, 'footnote-ref') ||
+        hasProperty(node, 'dataFootnoteRef', 'data-footnote-ref'))
+    ) {
+      addClass(node, 'footnote-ref');
       const num = extractText(node) || '1';
       node.properties = {
         ...node.properties,
         ariaLabel: i18n.footnoteRefLabel(num),
       };
     }
-    if (node.tagName === 'a' && hasClass(node, 'footnote-backref')) {
-      const num = extractText(node).replace(/[^\d]/g, '') || '1';
+    if (
+      node.tagName === 'a' &&
+      (hasClass(node, 'footnote-backref') ||
+        hasClass(node, 'data-footnote-backref') ||
+        hasProperty(node, 'dataFootnoteBackref', 'data-footnote-backref'))
+    ) {
+      addClass(node, 'footnote-backref');
+      const num =
+        `${extractText(node)} ${String(node.properties?.ariaLabel ?? '')}`.replace(/[^\d]/g, '') ||
+        '1';
       node.properties = {
         ...node.properties,
         ariaLabel: i18n.footnoteBackrefLabel(num),

@@ -1276,7 +1276,8 @@ main {
     line-height: 1.75;
 }
 
-.post-content .footnote {
+.post-content .footnote,
+.post-content .footnotes {
     max-width: var(--reading-width);
     margin: var(--space-xl) auto 0;
     padding-top: var(--space-md);
@@ -1285,15 +1286,18 @@ main {
     font-size: 0.9rem;
 }
 
-.post-content .footnote ol {
+.post-content .footnote ol,
+.post-content .footnotes ol {
     padding-left: 1.4rem;
 }
 
-.post-content .footnote li {
+.post-content .footnote li,
+.post-content .footnotes li {
     margin-bottom: var(--space-sm);
 }
 
-.post-content .footnote-backref {
+.post-content .footnote-backref,
+.post-content [data-footnote-backref] {
     color: var(--color-main-subtext);
     text-decoration: none;
 }
