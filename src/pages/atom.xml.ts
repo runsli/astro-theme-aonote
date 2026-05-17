@@ -1,38 +1,53 @@
 import { site } from '../site.config';
-import { getPublishedPosts, postUrl } from '../utils/posts';
+import { getFeedItems } from '../utils/feed';
+import { absoluteUrl } from '../utils/paths';
+import { postSlug } from '../utils/posts';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const posts = await getPublishedPosts();
-  const blogPosts = posts.filter((p) => {
-    const slug = p.id.replace(/\.mdx?$/, '');
-    return !['about', '404'].includes(slug);
-  });
-  const siteUrl = context.site!.toString().replace(/\/$/, '');
+  const items = await getFeedItems();
+  const siteUrl = absoluteUrl('/');
+  const atomUrl = absoluteUrl('/atom.xml');
+  const rssUrl = absoluteUrl('/rss.xml');
 
-  const entries = blogPosts
-    .map((post) => {
-      const link = new URL(postUrl(post), context.site).href;
+  const entries = items
+    .map(({ post, html }) => {
+      const link = absoluteUrl(`/posts/${postSlug(post)}/`);
+      const published = post.data.date.toISOString().replace('+00:00', 'Z');
+      const categories = post.data.tags
+        .map((tag) => `<category term="${escapeXml(tag)}" />`)
+        .join('');
+      const summary = escapeXml(post.data.summary ?? site.description);
+
       return `
   <entry>
     <title>${escapeXml(post.data.title)}</title>
     <link href="${link}" />
     <id>${link}</id>
-    <updated>${post.data.date.toISOString()}</updated>
-    <summary>${escapeXml(post.data.summary ?? '')}</summary>
+    <published>${published}</published>
+    <updated>${published}</updated>
     <author><name>${escapeXml(site.author)}</name></author>
+    ${categories}
+    <summary>${summary}</summary>
+    <content type="html">${escapeXml(html)}</content>
   </entry>`;
     })
     .join('');
+
+  const updated =
+    items[0]?.post.data.date.toISOString().replace('+00:00', 'Z') ??
+    new Date().toISOString().replace('+00:00', 'Z');
 
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>${escapeXml(site.title)}</title>
   <subtitle>${escapeXml(site.description)}</subtitle>
-  <link href="${siteUrl}/" />
-  <link rel="self" href="${siteUrl}/atom.xml" />
-  <updated>${blogPosts[0]?.data.date.toISOString() ?? new Date().toISOString()}</updated>
-  <id>${siteUrl}/</id>
+  <link href="${siteUrl}" rel="alternate" type="text/html" />
+  <link href="${atomUrl}" rel="self" type="application/atom+xml" />
+  <link href="${rssUrl}" rel="alternate" type="application/rss+xml" />
+  <id>${siteUrl}</id>
+  <updated>${updated}</updated>
+  <author><name>${escapeXml(site.author)}</name></author>
   ${entries}
 </feed>`;
 

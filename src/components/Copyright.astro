@@ -17,22 +17,29 @@ const { postTitle, canonicalUrl } = Astro.props;
 const locale = site.language;
 const i18n = t(locale);
 const cfg = site.copyright;
-
 const show = shouldShowCopyright(cfg);
-const notice = show ? getCopyrightNotice(cfg.type.replace(/\./g, '_'), locale) : '';
-const icon = show && cfg.showLicenseIcon ? getLicenseIcon(cfg.type.replace(/\./g, '_')) : null;
+const licenseKey = cfg.type.replace(/\./g, '_');
+const notice = show ? getCopyrightNotice(licenseKey, locale) : '';
+const icon = show && cfg.showLicenseIcon ? getLicenseIcon(licenseKey) : null;
 const formatBlock = formatCopyrightBlock(postTitle, site.author, canonicalUrl, locale);
+const additionalNote = cfg.additionalNote || i18n.copyrightAdditionalNote;
 ---
 
 {show && (
-<aside class="post-copyright" aria-label="Copyright">
-  {icon && <span class="license-icon" aria-hidden="true">{icon}</span>}
-  {notice && <p class="copyright-notice">{notice}</p>}
-  {cfg.additionalNote || i18n.copyrightAdditionalNote ? (
-    <p class="copyright-note">{cfg.additionalNote || i18n.copyrightAdditionalNote}</p>
-  ) : null}
-  {cfg.showStandardFormat && (
-    <pre class="copyright-format"><code>{formatBlock}</code></pre>
-  )}
-</aside>
+  <div class="post-license">
+    <p>
+      {icon && (
+        <span class="license-icon" aria-hidden="true">
+          <i>{icon}</i>
+        </span>
+      )}
+      <span set:html={notice} />
+    </p>
+    {cfg.showStandardFormat && additionalNote && <p>{additionalNote}</p>}
+    {cfg.showStandardFormat && (
+      <div class="license-format-code">
+        <code set:html={formatBlock} />
+      </div>
+    )}
+  </div>
 )}

@@ -140,11 +140,11 @@ Sample text here...
 ### 长代码行
 
 ```bash
-curl "https://example.com/api/articles?category=markdown&tag=no-js&include=metadata,summary,content,links,license&sort=published_at_desc"
+curl "https://example.com/api/articles?category=markdown&tag=markdown&include=metadata,summary,content,links,license&sort=published_at_desc"
 ```
 
 ````md
 ```bash
-curl "https://example.com/api/articles?category=markdown&tag=no-js&include=metadata,summary,content,links,license&sort=published_at_desc"
+curl "https://example.com/api/articles?category=markdown&tag=markdown&include=metadata,summary,content,links,license&sort=published_at_desc"
 ```
 ````

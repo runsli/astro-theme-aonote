@@ -2,32 +2,30 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../site.config';
 import { t } from '../../i18n';
-import { getAllTags, getPublishedPosts } from '../../utils/posts';
+import { getAllTags, getBlogPosts, tagUrl } from '../../utils/posts';
 
-const posts = await getPublishedPosts();
-const blogPosts = posts.filter((p) => {
-  const slug = p.id.replace(/\.mdx?$/, '');
-  return !['about', '404'].includes(slug);
-});
+const blogPosts = await getBlogPosts();
 const tags = getAllTags(blogPosts);
+const tagCounts = tags.map((tag) => ({
+  tag,
+  count: blogPosts.filter((p) => p.data.tags.includes(tag)).length,
+}));
+tagCounts.sort((a, b) => b.count - a.count);
 const i18n = t(site.language);
+const canonicalUrl = new URL('/tags/', Astro.site).href;
 ---
 
-<BaseLayout title={i18n.navTags} pageId="tags">
+<BaseLayout title={i18n.pageTags} pageId="tags" canonicalUrl={canonicalUrl} hiddenPageTitle>
   <h1>{i18n.tagsListHeading}</h1>
-  {tags.length === 0 ? (
+  {tagCounts.length === 0 ? (
     <p class="empty-state">{i18n.noTags}</p>
   ) : (
-    <ul class="tag-cloud">
-      {tags.map((tag) => {
-        const count = blogPosts.filter((p) => p.data.tags.includes(tag)).length;
-        return (
-          <li>
-            <a href={`/tags/${encodeURIComponent(tag)}/`}>{tag}</a>
-            <span class="tag-count">({count})</span>
-          </li>
-        );
-      })}
-    </ul>
+    <div class="tag-cloud">
+      {tagCounts.map(({ tag, count }) => (
+        <a href={tagUrl(tag)} class="tag-cloud-item">
+          {tag} ({count})
+        </a>
+      ))}
+    </div>
   )}
 </BaseLayout>

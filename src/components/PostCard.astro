@@ -1,6 +1,6 @@
 ---
 import type { Post } from '../utils/posts';
-import { formatDate, postUrl } from '../utils/posts';
+import { formatDate, postUrl, tagUrl } from '../utils/posts';
 import { site } from '../site.config';
 
 interface Props {
@@ -12,23 +12,19 @@ const url = postUrl(post);
 const dateStr = formatDate(post.data.date, site.language);
 ---
 
-<article class="post-card" itemscope itemtype="https://schema.org/BlogPosting">
-  <h2 class="post-card-title">
-    <a href={url} itemprop="url">
-      <span itemprop="headline">{post.data.title}</span>
-    </a>
+<article class="post-list-item">
+  <h2 class="post-title">
+    <a href={url} class="post-title-link">{post.data.title}</a>
   </h2>
-  <p class="post-meta">
-    <time datetime={post.data.date.toISOString()} itemprop="datePublished">{dateStr}</time>
-  </p>
-  {post.data.tags.length > 0 && (
-    <ul class="post-tags">
-      {post.data.tags.map((tag) => (
-        <li>
-          <a href={`/tags/${encodeURIComponent(tag)}/`} rel="tag">{tag}</a>
-        </li>
-      ))}
-    </ul>
-  )}
-  {post.data.summary && <p class="post-excerpt" itemprop="description">{post.data.summary}</p>}
+  <div class="post-list-meta-line">
+    <span class="meta-date-wrapper meta-date">{dateStr}</span>
+    {post.data.tags.length > 0 && (
+      <div class="tags-wrapper">
+        {post.data.tags.map((tag) => (
+          <a href={tagUrl(tag)} class="tag-badge">{tag}</a>
+        ))}
+      </div>
+    )}
+  </div>
+  {post.data.summary && <p class="post-excerpt">{post.data.summary}</p>}
 </article>

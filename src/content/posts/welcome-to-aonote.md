@@ -1,53 +1,48 @@
 ---
 title: 欢迎来到 Aonote 青笺
 date: 2025-12-01
-summary: 介绍 Aonote 青笺作为 no-JS 静态博客模板的定位、核心能力、适用场景和开始使用方式。
-tags: [建站日志]
+summary: 介绍 astro-theme-aonote 作为 Aonote 分支项目的定位、核心能力与开始使用方式。
+tags: [intro]
 ---
 
-# 欢迎来到 Aonote 青笺
+**astro-theme-aonote** 是 [runsli/Aonote](https://github.com/runsli/Aonote) 的 Astro 分支：把原版 Python 静态博客的视觉、布局与 Markdown 能力移植到 [Astro](https://astro.build)，适合部署到 Vercel、Netlify、GitHub Pages 或任意静态托管平台。
 
-**Aonote 青笺** 是一个面向个人博客、技术笔记和轻量文档站的 no-JS 静态网站模板。它使用 Python 将 Markdown 内容生成纯 HTML/CSS 页面，适合部署到 Vercel、Netlify、GitHub Pages 或任意静态托管平台。
-
-这个模板的目标不是做成一个功能繁复的 Web App，而是提供一个干净、稳定、可长期维护的写作起点：内容放在 Markdown 里，样式集中在 CSS 里，构建结果就是可以直接发布的静态文件。
+这个分支的目标不是做成功能繁复的 Web 应用，而是提供一个干净、稳定、可长期维护的写作起点：内容放在 Markdown 里，样式集中在 CSS 里，构建结果就是可以直接发布的静态文件。
 
 ## 适合什么场景
-
-Aonote 青笺适合这些用途：
 
 - 个人博客：记录学习、项目、阅读和长期思考。
 - 技术笔记：整理代码片段、问题复盘、工具配置和实践经验。
 - 项目文档：发布轻量说明、版本记录、使用指南和设计决策。
-- no-JS 实验站：验证纯 HTML/CSS 在现代博客中的可用性。
+- 已有 Astro 站点：希望复用 Aonote 的版式与 Markdown 扩展，而不必维护 Python 构建脚本。
 
-如果你希望站点打开快、依赖少、容易迁移，并且不想为一个内容站维护复杂的前端运行时，它会是一个轻量的起点。
+如果你已经在用 Astro，或希望与 Astro 插件、部署流程集成，这个分支会比上游 Python 版更顺手。
 
-## 模板已经准备了什么
+## 分支已包含的能力
 
-默认配置已经包含常见博客需要的基础能力：
-
-- 首页、文章页、归档页、标签页、关于页和真实 404 页面。
-- Markdown 目录、代码高亮、表格、脚注、任务列表、提示块和数学公式。
-- RSS、Atom、Sitemap、canonical、Open Graph 和 Twitter Card。
-- 浅色/暗色模式、移动端导航、键盘焦点样式和锚点滚动优化。
-- 构建后健康检查，用来发现链接、SEO、无障碍和 no-JS 方面的问题。
-
-这些功能都围绕一个原则设计：让内容站保持静态、可读、可部署，而不是依赖浏览器端脚本补齐关键体验。
+- 首页、文章页、归档页、标签页、关于页和 404 页面。
+- Markdown：GFM、代码高亮、表格、脚注、任务列表、提示块与数学公式（MathML）。
+- RSS、Atom、Sitemap、canonical、Open Graph 与 Twitter Card。
+- 浅色/暗色模式、移动端导航与目录（TOC）。
 
 ## 如何开始使用
 
-使用时通常只需要做几件事：
+1. 修改 `src/site.config.ts` 中的站点名称、描述、作者和 `baseUrl`。
+2. 在 `src/content/posts/` 中新增或替换文章，文件名建议使用小写 kebab-case。
+3. 按需调整 `src/styles/aonote.css` 中的颜色、字体和间距。
+4. 运行 `npm run dev` 本地预览，或 `npm run build` 生成 `dist/`。
+5. 将 `dist/` 部署到静态托管平台。
 
-1. 修改 `config.py` 中的站点名称、描述、作者和线上域名。
-2. 在 `markdown/` 中新增或替换文章，文件名建议使用小写 kebab-case。
-3. 根据自己的品牌调整 `assets/style.css` 中的颜色、字体和间距。
-4. 运行 `python autobuild.py` 构建站点，并检查 `_site/` 输出。
-5. 将 `_site/` 部署到静态托管平台。
+若要改成自己的站点，建议先替换这篇欢迎文章和 `about.md`，再逐步调整样式与示例内容。
 
-如果要把它改成自己的站点，建议先替换这篇欢迎文章和 `about.md`，再逐步调整样式和示例内容。
+## 与上游的关系
 
-## 命名与风格
+| 上游 (Python) | 本分支 (Astro) |
+| --- | --- |
+| `config.py` | `src/site.config.ts` |
+| `markdown/` | `src/content/posts/` |
+| `templates/base.html` | `src/layouts/BaseLayout.astro` |
+| `assets/style.css` | `src/styles/aonote.css` |
+| `python autobuild.py` | `npm run build` |
 
-`Aonote` 是一个偏轻量的造词，保留了 note 的笔记含义；中文名“青笺”更强调纸页、写作和安静记录的感觉。作为模板名称，它想传达的是一种克制的方向：少一点运行时，多一点内容本身。
-
-你可以保留这套命名，也可以把它替换成自己的品牌。模板本身没有绑定特定作者身份，适合继续改造成个人站、团队文档或项目主页。
+功能与样式会尽量跟随上游 Aonote 演进；差异主要来自 Astro 的构建与内容管线。欢迎在 Issues 中反馈移植遗漏或改进建议。

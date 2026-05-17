@@ -1,7 +1,7 @@
 /** Site configuration — edit this file to customize your blog. */
 export const site = {
   /** Production URL (no trailing slash). */
-  baseUrl: 'https://aonote.vercel.app',
+  baseUrl: 'https://astro-theme-aonote.vercel.app',
   /** GitHub Pages subpath, e.g. "/repo-name". Leave empty for root deploy. */
   repoSubpath: '',
   title: 'Aonote 青笺',

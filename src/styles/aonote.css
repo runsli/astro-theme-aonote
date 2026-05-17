@@ -61,7 +61,7 @@
     --color-border: #f0f0f0;
 
     --color-text-dark: #ededed;
-    --color-text-secondary-dark: #888;
+    --color-text-secondary-dark: #a8b3bf;
     --color-background-dark: #121212;
     --color-card-dark: #1e1e1e;
     --color-border-light: #333;
@@ -222,7 +222,7 @@ h3 {
     h4,
     h5,
     h6 {
-        color: #ededed;
+        color: var(--color-text-dark);
     }
 }
 
@@ -520,7 +520,7 @@ main {
 
 /* J. 文章正文 (Content) / Post content */
 .post-content p {
-    color: #212121;
+    color: var(--color-main-text);
     letter-spacing: 0.005em;
     line-height: 1.75;
     margin-bottom: 1.6em;
@@ -544,12 +544,6 @@ main {
 .post-content ol {
     padding-left: 2rem;
     box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-    .post-content p {
-        color: #ededed;
-    }
 }
 
 .post-content h2+p,
@@ -576,15 +570,16 @@ main {
     }
 }
 
-/* 标题锚点提示 (Hover 显示 #) Heading anchor hint (# on hover) */
+/* 标题锚点 (pymdownx anchorlink) / Heading permalink */
 .post-content h2,
-.post-content h3 {
+.post-content h3,
+.post-content h4 {
     position: relative;
 }
 
-.post-content h2::before,
-.post-content h3::before {
-    content: "#";
+.post-content h2 .headerlink,
+.post-content h3 .headerlink,
+.post-content h4 .headerlink {
     position: absolute;
     left: -1.2em;
     top: 0;
@@ -593,18 +588,33 @@ main {
     transition: opacity 0.2s ease, transform 0.2s ease;
     transform: translateX(10px);
     font-weight: 400;
+    text-decoration: none;
 }
 
-.post-content h2:hover::before,
-.post-content h3:hover::before {
+.post-content h2:hover .headerlink,
+.post-content h2:focus-within .headerlink,
+.post-content h3:hover .headerlink,
+.post-content h3:focus-within .headerlink,
+.post-content h4:hover .headerlink,
+.post-content h4:focus-within .headerlink {
     opacity: 0.6;
     transform: translateX(0);
 }
 
+.post-content h2 .headerlink:hover,
+.post-content h2 .headerlink:focus,
+.post-content h3 .headerlink:hover,
+.post-content h3 .headerlink:focus,
+.post-content h4 .headerlink:hover,
+.post-content h4 .headerlink:focus {
+    opacity: 1;
+}
+
 @media (max-width: 900px) {
 
-    .post-content h2::before,
-    .post-content h3::before {
+    .post-content h2 .headerlink,
+    .post-content h3 .headerlink,
+    .post-content h4 .headerlink {
         display: none;
     }
 }
@@ -759,6 +769,16 @@ main {
     overflow-x: auto;
 }
 
+.post-content .katex {
+    color: var(--color-main-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    .post-content .katex {
+        color: var(--color-main-text);
+    }
+}
+
 .post-content div.arithmatex {
     max-width: var(--reading-width);
     margin: var(--space-lg) auto;
@@ -840,6 +860,28 @@ main {
     .post-content .highlight .hll {
         background-color: rgba(108, 182, 255, 0.12);
         box-shadow: inset 3px 0 0 rgba(108, 182, 255, 0.52);
+    }
+
+    /*
+     * Shiki 双主题：Astro 输出 light/dark 两套 CSS 变量，需在此激活 dark 令牌
+     * Dual-theme Shiki: activate --shiki-dark-* tokens (otherwise pre stays #fff)
+     */
+    .post-content .highlight pre.astro-code,
+    .post-content .highlight pre.astro-code span {
+        color: var(--shiki-dark) !important;
+        background-color: var(--shiki-dark-bg) !important;
+        font-style: var(--shiki-dark-font-style) !important;
+        font-weight: var(--shiki-dark-font-weight) !important;
+        text-decoration: var(--shiki-dark-text-decoration) !important;
+    }
+
+    .post-content .highlight pre.astro-code span {
+        background-color: transparent !important;
+    }
+
+    .post-content .highlight pre.astro-code {
+        background-color: var(--shiki-dark-bg, var(--color-code-bg-dark)) !important;
+        color: var(--shiki-dark, #adbac7) !important;
     }
 }
 
@@ -1160,9 +1202,21 @@ main {
 }
 
 @media (prefers-color-scheme: dark) {
+    .admonition {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
     .admonition.note .admonition-title,
     .admonition.tip .admonition-title {
         color: var(--color-link-dark);
+    }
+
+    .admonition.warning .admonition-title {
+        color: #ffd54f;
+    }
+
+    .admonition.danger .admonition-title {
+        color: #ff8a80;
     }
 }
 
@@ -1294,11 +1348,12 @@ main {
 .meta-date {
     font-family: var(--font-mono);
     font-size: 0.9rem;
+    color: var(--color-main-subtext);
     padding: 0;
     border-radius: 0;
     background-color: transparent;
     border: 0;
-    opacity: 0.85;
+    opacity: 0.92;
     display: flex;
     align-items: center;
     line-height: 1.2;

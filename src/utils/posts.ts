@@ -1,11 +1,21 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { siteHref } from './paths';
+import { tagToSlug } from './slug';
 
 export type Post = CollectionEntry<'posts'>;
 
-export async function getPublishedPosts(): Promise<Post[]> {
+export function postSlug(post: Post): string {
+  return post.id.replace(/\.mdx?$/, '');
+}
+
+/** Published blog articles only (excludes draft/hidden). */
+export async function getBlogPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', ({ data }) => !data.draft && !data.hidden);
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
+
+/** @deprecated Use getBlogPosts */
+export const getPublishedPosts = getBlogPosts;
 
 export function formatDate(date: Date, locale: string): string {
   return date.toLocaleDateString(locale === 'zh-CN' ? 'zh-CN' : 'en-US', {
@@ -15,11 +25,19 @@ export function formatDate(date: Date, locale: string): string {
   });
 }
 
+/** Short date for archive list (MM-DD). */
+export function formatArchiveDate(date: Date): string {
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${m}-${d}`;
+}
+
 export function postUrl(post: Post): string {
-  const slug = post.id.replace(/\.mdx?$/, '');
-  if (slug === 'about') return '/about/';
-  if (slug === '404') return '/404/';
-  return `/posts/${slug}/`;
+  return siteHref(`/posts/${postSlug(post)}/`);
+}
+
+export function tagUrl(tag: string): string {
+  return siteHref(`/tags/${tagToSlug(tag)}/`);
 }
 
 export function getAllTags(posts: Post[]): string[] {
@@ -45,10 +63,9 @@ export function getAdjacentPosts(
   posts: Post[],
   current: Post,
 ): { prev: Post | null; next: Post | null } {
-  const blogPosts = posts.filter((p) => !['about', '404'].includes(p.id.replace(/\.mdx?$/, '')));
-  const idx = blogPosts.findIndex((p) => p.id === current.id);
+  const idx = posts.findIndex((p) => p.id === current.id);
   return {
-    prev: idx > 0 ? blogPosts[idx - 1]! : null,
-    next: idx >= 0 && idx < blogPosts.length - 1 ? blogPosts[idx + 1]! : null,
+    prev: idx > 0 ? posts[idx - 1]! : null,
+    next: idx >= 0 && idx < posts.length - 1 ? posts[idx + 1]! : null,
   };
 }
