@@ -1,4 +1,5 @@
 import { visit } from 'unist-util-visit';
+import type { Parent } from 'unist';
 import type { Element, Root, ElementContent } from 'hast';
 import type { VFile } from 'vfile';
 import { t, type Locale } from '../i18n';
@@ -47,6 +48,15 @@ function isElement(node: unknown): node is Element {
   );
 }
 
+function isParent(node: unknown): node is Parent {
+  return (
+    typeof node === 'object' &&
+    node !== null &&
+    'children' in node &&
+    Array.isArray((node as Parent).children)
+  );
+}
+
 function hasClass(node: Element, name: string): boolean {
   const cls = node.properties?.className;
   if (!cls) return false;
@@ -74,7 +84,10 @@ function parseMeta(meta?: string): { title?: string; hlLines: number[] } {
   return { title, hlLines };
 }
 
-function getLanguageFromPre(pre: Element): string | undefined {
+export function getLanguageFromPre(pre: Element): string | undefined {
+  const dataLanguage = pre.properties?.['data-language'];
+  if (typeof dataLanguage === 'string') return dataLanguage.toLowerCase();
+
   const dataLang = pre.properties?.dataLang;
   if (typeof dataLang === 'string') return dataLang.toLowerCase();
 
@@ -138,15 +151,16 @@ function transformDirectivesToAdmonitions(tree: Root) {
   });
 }
 
-function wrapTables(tree: Root, locale: Locale) {
+export function wrapTables(tree: Root, locale: Locale) {
   const i18n = t(locale);
   const tableCaptionPrefix = i18n.tableCaptionPrefix;
   const fallbackLabel = i18n.tableScrollRegionFallbackLabel;
 
-  visit(tree, 'element', (node, index, parent) => {
-    if (node.tagName !== 'table' || !parent || index == null) return;
-    if (!isElement(parent)) return;
-    if (parent.tagName === 'div' && hasClass(parent, 'table-wrapper')) return;
+  visit(tree, 'element', (node, _index, parent) => {
+    if (node.tagName !== 'table' || !isParent(parent)) return;
+    let index = parent.children.indexOf(node);
+    if (index === -1) return;
+    if (isElement(parent) && parent.tagName === 'div' && hasClass(parent, 'table-wrapper')) return;
 
     let captionText: string | undefined;
     let captionIndex: number | undefined;
@@ -211,21 +225,24 @@ function wrapTables(tree: Root, locale: Locale) {
   });
 }
 
-function wrapCodeBlocks(tree: Root, locale: Locale) {
+export function wrapCodeBlocks(tree: Root, locale: Locale) {
   const i18n = t(locale);
-  visit(tree, 'element', (node, index, parent) => {
-    if (node.tagName !== 'pre' || !parent || index == null) return;
-    if (!isElement(parent)) return;
-    if (parent.tagName === 'motion.div' && hasClass(parent, 'highlight')) return;
-    if (parent.tagName === 'div' && hasClass(parent, 'highlight')) return;
+  visit(tree, 'element', (node, _index, parent) => {
+    if (node.tagName !== 'pre' || !isParent(parent)) return;
+    const index = parent.children.indexOf(node);
+    if (index === -1) return;
+    if (isElement(parent) && parent.tagName === 'div' && hasClass(parent, 'highlight')) return;
 
+    const titleFromPre =
+      node.properties?.['data-title'] ?? node.properties?.dataTitle;
     const metaAttr = node.properties?.dataMeta ?? node.properties?.meta;
     const meta = String(
       (Array.isArray(metaAttr) ? metaAttr.join(' ') : metaAttr) ??
         (node.data as { meta?: string } | undefined)?.meta ??
         '',
     );
-    const { title, hlLines } = parseMeta(meta);
+    const { title: titleFromMeta, hlLines } = parseMeta(meta);
+    const title = titleFromPre ? String(titleFromPre) : titleFromMeta;
     const lang = getLanguageFromPre(node);
     const label = lang ? langLabel(lang) : undefined;
 
@@ -464,8 +481,6 @@ export function rehypeAonoteEnhance(options: { locale?: Locale } = {}) {
   return (tree: Root, file?: VFile) => {
     mapDirectiveContainers(tree);
     transformDirectivesToAdmonitions(tree);
-    wrapTables(tree, locale);
-    wrapCodeBlocks(tree, locale);
     enhanceImages(tree, file?.path);
     enhanceImageCaptions(tree);
     enhanceFootnotes(tree, locale);

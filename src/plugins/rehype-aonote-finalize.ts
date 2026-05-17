@@ -4,6 +4,7 @@ import { expandHlLinesTokens, parseHlLinesMeta } from '../utils/hl-lines';
 import { addClass, getClasses, hasClass, setClasses } from '../utils/hast-classes';
 import type { ElementContent } from 'hast';
 import { t, type Locale } from '../i18n';
+import { wrapCodeBlocks, wrapTables } from './rehype-aonote';
 
 const LANG_LABELS: Record<string, string> = {
   python: 'PYTHON',
@@ -30,10 +31,14 @@ function langLabel(lang: string): string {
   return LANG_LABELS[lang.toLowerCase()] ?? lang.toUpperCase();
 }
 
-/** Run after Shiki: set data-lang / data-title on .highlight from child pre + meta. */
+/** Run after Shiki: wrap blocks, then set data-lang / data-title on .highlight. */
 export function rehypeAonoteFinalize(options: { locale?: Locale } = {}) {
-  const i18n = t(options.locale ?? 'en');
+  const locale = options.locale ?? 'en';
+  const i18n = t(locale);
   return (tree: Root) => {
+    wrapTables(tree, locale);
+    wrapCodeBlocks(tree, locale);
+
     visit(tree, 'element', (node) => {
       if (node.tagName !== 'div') return;
       const cls = node.properties?.className ?? node.properties?.class;
