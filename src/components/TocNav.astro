@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { headings, class: className } = Astro.props;
-const items = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+const items = headings.filter((h) => h.depth >= 1 && h.depth <= 4);
 
 type TocNode = { heading: Heading; children: TocNode[] };
 

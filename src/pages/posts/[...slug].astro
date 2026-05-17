@@ -41,7 +41,7 @@ const tocHeadings = headings.map((h) => ({
   slug: h.slug,
   text: h.text,
 }));
-const hasToc = tocHeadings.some((h) => h.depth >= 2 && h.depth <= 4);
+const hasToc = tocHeadings.some((h) => h.depth >= 1 && h.depth <= 4);
 ---
 
 <BaseLayout
