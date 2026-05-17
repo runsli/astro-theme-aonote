@@ -16,7 +16,7 @@ function hasHeaderlink(node: Element): boolean {
 
 /** Match upstream pymdownx `toc.anchorlink`: clickable # links on headings. */
 export function rehypeAonoteAnchorlink(options: { locale?: Locale } = {}) {
-  const locale = options.locale ?? 'zh-CN';
+  const locale = options.locale ?? 'en';
   const i18n = t(locale);
 
   return (tree: Root) => {

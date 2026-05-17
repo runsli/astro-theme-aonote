@@ -1,43 +1,43 @@
 ---
-title: 欢迎来到 Aonote 青笺
+title: Welcome to Aonote
 date: 2025-12-01
-summary: 介绍 astro-theme-aonote 作为 Aonote 分支项目的定位、核心能力与开始使用方式。
+summary: What astro-theme-aonote is, what it includes, and how to get started.
 tags: [intro]
 ---
 
-**astro-theme-aonote** 是 [runsli/Aonote](https://github.com/runsli/Aonote) 的 Astro 分支：把原版 Python 静态博客的视觉、布局与 Markdown 能力移植到 [Astro](https://astro.build)，适合部署到 Vercel、Netlify、GitHub Pages 或任意静态托管平台。
+**astro-theme-aonote** is an Astro port of [runsli/Aonote](https://github.com/runsli/Aonote): the Python static blog’s layout and Markdown features rebuilt on [Astro](https://astro.build), ready for Vercel, Netlify, GitHub Pages, or any static host.
 
-这个分支的目标不是做成功能繁复的 Web 应用，而是提供一个干净、稳定、可长期维护的写作起点：内容放在 Markdown 里，样式集中在 CSS 里，构建结果就是可以直接发布的静态文件。
+The goal is not a heavy web app—it is a calm, maintainable writing baseline. Content stays in Markdown, styles in CSS, and the build output is plain static files you can publish anywhere.
 
-## 适合什么场景
+## Good fits
 
-- 个人博客：记录学习、项目、阅读和长期思考。
-- 技术笔记：整理代码片段、问题复盘、工具配置和实践经验。
-- 项目文档：发布轻量说明、版本记录、使用指南和设计决策。
-- 已有 Astro 站点：希望复用 Aonote 的版式与 Markdown 扩展，而不必维护 Python 构建脚本。
+- Personal blogs: learning notes, projects, reading lists, long-form thinking.
+- Technical notes: snippets, postmortems, tool configs, and workflows.
+- Lightweight docs: changelogs, guides, and design decisions.
+- Existing Astro sites: reuse Aonote’s layout and Markdown extensions without a Python build script.
 
-如果你已经在用 Astro，或希望与 Astro 插件、部署流程集成，这个分支会比上游 Python 版更顺手。
+If you already use Astro—or want its deploy and plugin ecosystem—this branch is usually simpler than the upstream Python generator.
 
-## 分支已包含的能力
+## Included out of the box
 
-- 首页、文章页、归档页、标签页、关于页和 404 页面。
-- Markdown：GFM、代码高亮、表格、脚注、任务列表、提示块与数学公式（MathML）。
-- RSS、Atom、Sitemap、canonical、Open Graph 与 Twitter Card。
-- 浅色/暗色模式、移动端导航与目录（TOC）。
+- Home, posts, archive, tags, about, and 404 pages.
+- Markdown: GFM, Shiki highlighting, tables, footnotes, task lists, admonitions, and MathML math.
+- RSS, Atom, sitemap, canonical URLs, Open Graph, and Twitter cards.
+- Light/dark theme, mobile navigation, and in-page table of contents.
 
-## 如何开始使用
+## Getting started
 
-1. 修改 `src/site.config.ts` 中的站点名称、描述、作者和 `baseUrl`。
-2. 在 `src/content/posts/` 中新增或替换文章，文件名建议使用小写 kebab-case。
-3. 按需调整 `src/styles/aonote.css` 中的颜色、字体和间距。
-4. 运行 `npm run dev` 本地预览，或 `npm run build` 生成 `dist/`。
-5. 将 `dist/` 部署到静态托管平台。
+1. Edit site name, description, author, and `baseUrl` in `src/site.config.ts`.
+2. Add or replace posts under `src/content/posts/` (kebab-case filenames recommended).
+3. Tune colors, fonts, and spacing in `src/styles/aonote.css` if needed.
+4. Run `npm run dev` locally or `npm run build` to produce `dist/`.
+5. Deploy `dist/` to your static host.
 
-若要改成自己的站点，建议先替换这篇欢迎文章和 `about.md`，再逐步调整样式与示例内容。
+To make the site yours, start by replacing this welcome post and `about.md`, then trim the sample posts.
 
-## 与上游的关系
+## Upstream mapping
 
-| 上游 (Python) | 本分支 (Astro) |
+| Upstream (Python) | This branch (Astro) |
 | --- | --- |
 | `config.py` | `src/site.config.ts` |
 | `markdown/` | `src/content/posts/` |
@@ -45,4 +45,4 @@ tags: [intro]
 | `assets/style.css` | `src/styles/aonote.css` |
 | `python autobuild.py` | `npm run build` |
 
-功能与样式会尽量跟随上游 Aonote 演进；差异主要来自 Astro 的构建与内容管线。欢迎在 Issues 中反馈移植遗漏或改进建议。
+We aim to track upstream Aonote; differences mostly come from Astro’s content and build pipeline. Issues and PRs for parity gaps are welcome.

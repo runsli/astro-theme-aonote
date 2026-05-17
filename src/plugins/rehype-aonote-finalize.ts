@@ -32,7 +32,7 @@ function langLabel(lang: string): string {
 
 /** Run after Shiki: set data-lang / data-title on .highlight from child pre + meta. */
 export function rehypeAonoteFinalize(options: { locale?: Locale } = {}) {
-  const i18n = t(options.locale ?? 'zh-CN');
+  const i18n = t(options.locale ?? 'en');
   return (tree: Root) => {
     visit(tree, 'element', (node) => {
       if (node.tagName !== 'div') return;

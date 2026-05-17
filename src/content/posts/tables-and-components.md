@@ -1,78 +1,78 @@
 ---
-title: 表格与原生组件示例
+title: Tables and native components
 date: 2026-01-12
-summary: 展示无标题简单表格、带标题表格、宽表格、可键盘滚动表格区域和原生 details 折叠组件。
+summary: Simple and wide tables, scroll regions, and native details/summary.
 tags: [basic, markdown]
 ---
 
-这个页面聚焦表格和 HTML 原生组件。简单表格可以省略标题；复杂或宽表格建议使用 `表格：说明文字` 生成 caption。
+This page covers tables and native HTML components. Simple tables can omit a caption; wide or complex tables should use a `Table: …` caption line.
 
-# 表格
+# Tables
 
-## 无标题简单表格
+## Simple table (no caption)
 
-| 项目 | 状态 |
+| Item | Status |
 | :--- | :--- |
-| 简单表格 | 可省略标题 |
+| Simple table | Caption optional |
 
 ```md
-| 项目 | 状态 |
+| Item | Status |
 | :--- | :--- |
-| 简单表格 | 可省略标题 |
+| Simple table | Caption optional |
 ```
 
-## 带标题表格
+## Table with caption
 
-表格：Markdown 表格对齐方式示例
+Table: Markdown column alignment
 
-|     居中      |         右对齐 | 左对齐         |
-| :-----------: | -------------: | :------------- |
-| 居中使用`:-:` | 右对齐使用`-:` | 左对齐使用`:-` |
-|       b       |      aaaaaaaaa | aaaa           |
-|       c       |           aaaa | a              |
+|     Center      |         Right | Left           |
+| :-------------: | ------------: | :------------- |
+| Center (`:-:`)  | Right (`-:`)  | Left (`:-`)    |
+| b               |      aaaaaaaaa | aaaa           |
+| c               |           aaaa | a              |
 
 ```md
-表格：Markdown 表格对齐方式示例
+Table: Markdown column alignment
 
-|     居中      |         右对齐 | 左对齐         |
-| :-----------: | -------------: | :------------- |
-| 居中使用`:-:` | 右对齐使用`-:` | 左对齐使用`:-` |
-|       b       |      aaaaaaaaa | aaaa           |
-|       c       |           aaaa | a              |
+|     Center      |         Right | Left           |
+| :-------------: | ------------: | :------------- |
+| Center (`:-:`)  | Right (`-:`)  | Left (`:-`)    |
+| b               |      aaaaaaaaa | aaaa           |
+| c               |           aaaa | a              |
 ```
 
-## 宽表格
+## Wide table
 
-表格：文章列表横向滚动示例
+Table: Post list horizontal scroll demo
 
-| 日期 | 标题 | 分类 | 标签 | 状态 | 链接 |
+| Date | Title | Category | Tags | Status | Link |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2026-05-17 | Markdown 示例页扩展 | 文档 | markdown, style | 已发布 | https://example.com/posts/markdown-style-example |
-| 2026-05-18 | 纯 CSS 组件测试 | UI | css, html, static | 草稿 | https://example.com/posts/css-only-components |
+| 2026-05-17 | Extended Markdown sample | Docs | markdown, style | Published | https://example.com/posts/markdown-style-example |
+| 2026-05-18 | Pure CSS component test | UI | css, html, static | Draft | https://example.com/posts/css-only-components |
 
 ```md
-表格：文章列表横向滚动示例
+Table: Post list horizontal scroll demo
 
-| 日期 | 标题 | 分类 | 标签 | 状态 | 链接 |
+| Date | Title | Category | Tags | Status | Link |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2026-05-17 | Markdown 示例页扩展 | 文档 | markdown, style | 已发布 | https://example.com/posts/markdown-style-example |
-| 2026-05-18 | 纯 CSS 组件测试 | UI | css, html, static | 草稿 | https://example.com/posts/css-only-components |
+| 2026-05-17 | Extended Markdown sample | Docs | markdown, style | Published | https://example.com/posts/markdown-style-example |
+| 2026-05-18 | Pure CSS component test | UI | css, html, static | Draft | https://example.com/posts/css-only-components |
 ```
 
-## 原生折叠块
+## Native collapsible
 
 <details>
-<summary>展开查看更多</summary>
+<summary>Show more</summary>
 
-这里是使用原生 HTML 的折叠内容。
+Collapsible content using native HTML `<details>`.
 
 </details>
 
 ```html
 <details>
-<summary>展开查看更多</summary>
+<summary>Show more</summary>
 
-这里是使用原生 HTML 的折叠内容。
+Collapsible content using native HTML `<details>`.
 
 </details>
 ```

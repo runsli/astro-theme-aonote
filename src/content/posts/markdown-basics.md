@@ -1,95 +1,95 @@
 ---
-title: Markdown 基础排版示例
+title: Markdown typography basics
 date: 2026-01-10
-summary: 展示标题、段落、行内文本、链接、数学公式、列表、引用、脚注与中英文混排等 Markdown 基础能力。
+summary: Headings, paragraphs, links, math, lists, quotes, footnotes, and mixed-language text.
 tags: [basic, markdown]
 ---
 
-这个页面聚焦 Markdown 基础排版能力：标题、段落、行内文本、链接、数学公式、列表、引用、脚注和混排文本。
+This page demonstrates core Markdown typography: headings, paragraphs, inline text, links, math, lists, block quotes, footnotes, and mixed scripts.
 
-# 标题
+# Headings
 
 <!-- markdownlint-disable -->
 
-# 一级标题
+# Level 1 heading
 
 <!-- markdownlint-restore -->
 
-## 二级标题
+## Level 2 heading
 
-### 三级标题
+### Level 3 heading
 
-#### 四级标题
+#### Level 4 heading
 
-##### 五级标题
+##### Level 5 heading
 
-###### 六级标题
+###### Level 6 heading
 
 ```md
-# 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题
+# Level 1 heading
+## Level 2 heading
+### Level 3 heading
+#### Level 4 heading
+##### Level 5 heading
+###### Level 6 heading
 ```
 
-## 段落与换行
+## Paragraphs and line breaks
 
-这是一个段落。
+This is a paragraph.
 
-这是另一个段落。
+This is another paragraph.
 
-这是一句话不过我要在这里  
-换行
+This sentence ends here  
+with a manual line break.
 
 :::: tip
-上方的代码中 `这里` 后面有两个空格。
+In the source above, there are two spaces after `here`.
 ::::
 
 ```md
-这是一个段落。
+This is a paragraph.
 
-这是另一个段落。
+This is another paragraph.
 
-这是一句话不过我要在这里  
-换行
+This sentence ends here  
+with a manual line break.
 ```
 
-## 行内文本
+## Inline text
 
-这句话里拥有**加粗**、*倾斜*、~~删除~~、`行内代码`、<mark>重点标记</mark> 和快捷键 <kbd>⌘</kbd> + <kbd>K</kbd>。
+This sentence has **bold**, *italic*, ~~strikethrough~~, `inline code`, <mark>highlighted</mark> text, and the shortcut <kbd>⌘</kbd> + <kbd>K</kbd>.
 
-经典 Emoji: :wink: :cry: :laughing: :yum:
+Classic emoji: :wink: :cry: :laughing: :yum:
 
-简写 Emoji: 8-) :) :\* :( :-) :-( ;)
+Shorthand emoji: 8-) :) :\* :( :-) :-( ;)
 
 ```md
-这句话里拥有**加粗**、*倾斜*、~~删除~~、`行内代码`、<mark>重点标记</mark> 和快捷键 <kbd>⌘</kbd> + <kbd>K</kbd>。
+This sentence has **bold**, *italic*, ~~strikethrough~~, `inline code`, <mark>highlighted</mark> text, and the shortcut <kbd>⌘</kbd> + <kbd>K</kbd>.
 
-经典 Emoji: :wink: :cry: :laughing: :yum:
+Classic emoji: :wink: :cry: :laughing: :yum:
 
-简写 Emoji: 8-) :) :\* :( :-) :-( ;)
+Shorthand emoji: 8-) :) :\* :( :-) :-( ;)
 ```
 
-## 链接
+## Links
 
-[根目录访问主页](/)
+[Home from site root](/)
 
-[站内文章示例](/posts/welcome-to-aonote/)
+[In-site post example](/posts/welcome-to-aonote/)
 
-[根目录访问关于](/about)
+[About from site root](/about)
 
-[归档页面](/archive/)
+[Archive](/archive/)
 
 ```md
-[根目录访问主页](/)
-[站内文章示例](/posts/welcome-to-aonote/)
-[根目录访问关于](/about)
-[归档页面](/archive/)
+[Home from site root](/)
+[In-site post example](/posts/welcome-to-aonote/)
+[About from site root](/about)
+[Archive](/archive/)
 ```
 
-## 分割线
+## Horizontal rule
 
 ---
 
@@ -97,143 +97,143 @@ tags: [basic, markdown]
 ---
 ```
 
-## 数学公式
+## Math
 
-行内公式示例：$E = mc^2$。
+Inline math: $E = mc^2$.
 
-块级公式示例：
+Display math:
 
 $$
 \int_0^1 x^2 dx = \frac{1}{3}
 $$
 
 ````md
-行内公式示例：$E = mc^2$。
+Inline math: $E = mc^2$.
 
-块级公式示例：
+Display math:
 
 $$
 \int_0^1 x^2 dx = \frac{1}{3}
 $$
 ````
 
-## 列表
+## Lists
 
-### 无序列表
+### Unordered
 
-- 无序列表项
-- 无序列表项
-  - 列表中的列表项
-    - 更多的列表项
-    - 更多的列表项
-    - 更多的列表项
-  - 列表中的长列表项，这个列表项很长。
+- Item one
+- Item two
+  - Nested item
+    - Deeper item
+    - Deeper item
+    - Deeper item
+  - A longer item with multiple paragraphs.
 
-    而且由很多个段落构成。
+    Second paragraph in the same list item.
 
-    甚至最后一个段落还包含了[链接](#链接)。
-- 无序列表项
+    The last paragraph includes a [link](#links).
+- Item three
 
 ```md
-- 无序列表项
-- 无序列表项
-  - 列表中的列表项
-    - 更多的列表项
-  - 列表中的长列表项，这个列表项很长。
+- Item one
+- Item two
+  - Nested item
+    - Deeper item
+  - A longer item with multiple paragraphs.
 
-    而且由很多个段落构成。
+    Second paragraph in the same list item.
 
-    甚至最后一个段落还包含了[链接](#链接)。
+    The last paragraph includes a [link](#links).
 ```
 
-### 有序列表
+### Ordered
 
-1. 有序列表第一项
-1. 有序列表第二项  
-   第二项的需要换行  
-   再次换行
-1. 有序列表第三项
+1. First item
+1. Second item  
+   Line break inside the item  
+   Another line
+1. Third item
 
 :::: tip
-上方的代码中 `换行` 后面也有两个空格。
+There are two spaces after `item` in the source for the soft break.
 ::::
 
 ```md
-1. 有序列表第一项
-1. 有序列表第二项  
-   第二项的需要换行  
-   再次换行
-1. 有序列表第三项
+1. First item
+1. Second item  
+   Line break inside the item  
+   Another line
+1. Third item
 ```
 
-### 任务列表
+### Task list
 
-- [x] 已完成的任务
-- [ ] 未完成的任务
-- [ ] 静态页面中复选框不可点击
+- [x] Completed task
+- [ ] Open task
+- [ ] Checkboxes are not interactive in static HTML
 
 ```md
-- [x] 已完成的任务
-- [ ] 未完成的任务
-- [ ] 静态页面中复选框不可点击
+- [x] Completed task
+- [ ] Open task
+- [ ] Checkboxes are not interactive in static HTML
 ```
 
-### 定义列表
+### Definition list
 
-静态站点
-: 只由 HTML、CSS 和静态资源组成，不依赖客户端 JavaScript 运行时。
+Static site
+: Built from HTML, CSS, and assets only—no client-side app runtime required for reading.
 
 RSS
-: 一种用于订阅网站更新的格式，可以被阅读器聚合。
+: A feed format readers can subscribe to for site updates.
 
 ```md
-静态站点
-: 只由 HTML、CSS 和静态资源组成，不依赖客户端 JavaScript 运行时。
+Static site
+: Built from HTML, CSS, and assets only—no client-side app runtime required for reading.
 
 RSS
-: 一种用于订阅网站更新的格式，可以被阅读器聚合。
+: A feed format readers can subscribe to for site updates.
 ```
 
-## 引用
+## Block quotes
 
-> 引用也可以连用
+> Quotes can stack.
 >
-> > 可以添加额外的大于号制造更深的引用
+> > Extra `>` characters nest deeper quotes.
 
 ```md
-> 引用也可以连用
+> Quotes can stack.
 >
-> > 可以添加额外的大于号制造更深的引用
+> > Extra `>` characters nest deeper quotes.
 ```
 
-### 带来源的引用
+### Quote with citation
 
-> 简洁并不意味着缺少结构，而是每个结构都有清晰的用途。
+> Clarity does not mean less structure—each structure should earn its place.
 >
-> <cite>Aonote 阅读样式测试</cite>
+> <cite>Aonote reading-style test</cite>
 
 ```md
-> 简洁并不意味着缺少结构，而是每个结构都有清晰的用途。
+> Clarity does not mean less structure—each structure should earn its place.
 >
-> <cite>Aonote 阅读样式测试</cite>
+> <cite>Aonote reading-style test</cite>
 ```
 
-## 脚注
+## Footnotes
 
-这里有一个脚注引用。[^markdown-footnote]
+Here is a footnote reference.[^markdown-footnote]
 
-[^markdown-footnote]: 这是脚注内容，可以放补充说明、来源或延伸阅读。
+[^markdown-footnote]: Footnote body text for asides, sources, or further reading.
 
 ```md
-这里有一个脚注引用。[^markdown-footnote]
+Here is a footnote reference.[^markdown-footnote]
 
-[^markdown-footnote]: 这是脚注内容，可以放补充说明、来源或延伸阅读。
+[^markdown-footnote]: Footnote body text for asides, sources, or further reading.
 ```
 
-## 混排段落
+## Mixed scripts
 
-这是一段中文、English、数字 123、URL https://example.com/path/to/resource 和行内代码 `inline_code()` 混排的测试文本，用来观察行高、换行和标点间距。
+This paragraph mixes 中文, English, digits 123, the URL https://example.com/path/to/resource, and inline code `inline_code()` to exercise line height, wrapping, and punctuation spacing.
 
 ```md
-这是一段中文、English、数字 123、URL https://example.com/path/to/resource 和行内代码 `inline_code()` 混排的测试文本，用来观察行高、换行和标点间距。
+This paragraph mixes 中文, English, digits 123, the URL https://example.com/path/to/resource, and inline code `inline_code()` to exercise line height, wrapping, and punctuation spacing.
 ```

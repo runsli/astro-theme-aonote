@@ -460,7 +460,7 @@ function mapDirectiveContainers(tree: Root) {
 }
 
 export function rehypeAonoteEnhance(options: { locale?: Locale } = {}) {
-  const locale = options.locale ?? 'zh-CN';
+  const locale = options.locale ?? 'en';
   return (tree: Root, file?: VFile) => {
     mapDirectiveContainers(tree);
     transformDirectivesToAdmonitions(tree);

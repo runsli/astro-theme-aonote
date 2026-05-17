@@ -1,67 +1,67 @@
 ---
-title: 代码块与媒体示例
+title: Code blocks and media examples
 date: 2026-01-11
-summary: 展示图片、提示块、普通代码块、带标题代码块、行高亮、diff 高亮、长代码行和嵌套代码围栏。
+summary: Images, admonitions, fenced code, titles, line highlights, diff highlights, and long lines.
 tags: [basic, markdown, code]
 ---
 
-这个页面聚焦内容展示中的媒体和代码块：图片、提示块、语言标签、文件标题、行高亮、diff 加减高亮以及长代码行。
+This page focuses on media and code presentation: images, admonitions, language labels, file titles, line highlights, diff markers, and long lines.
 
-# 提示块
+# Admonitions
 
-:::: tip 提示
-这是 VuePress/VitePress 风格的 `tip` 提示块。
+:::: tip Tip
+VuePress/VitePress-style `tip` admonition.
 ::::
 
-!!! note "说明"
-    这是 Python-Markdown 原生的 `note` 提示块。
+!!! note "Note"
+    Python-Markdown-style `note` admonition.
 
-!!! warning "注意"
-    这里适合放置需要读者留意的信息。
+!!! warning "Warning"
+    Use for information readers should not miss.
 
-!!! danger "危险"
-    这里适合放置破坏性操作或重要风险提醒。
+!!! danger "Danger"
+    Use for destructive actions or serious risks.
 
 ````md
-:::: tip 提示
-这是 VuePress/VitePress 风格的 `tip` 提示块。
+:::: tip Tip
+VuePress/VitePress-style `tip` admonition.
 ::::
 
-!!! note "说明"
-    这是 Python-Markdown 原生的 `note` 提示块。
+!!! note "Note"
+    Python-Markdown-style `note` admonition.
 
-!!! warning "注意"
-    这里适合放置需要读者留意的信息。
+!!! warning "Warning"
+    Use for information readers should not miss.
 
-!!! danger "危险"
-    这里适合放置破坏性操作或重要风险提醒。
+!!! danger "Danger"
+    Use for destructive actions or serious risks.
 ````
 
-## 图片
+## Images
 
-![本地 SVG 占位图，包含山形图案和 Markdown Image Example 文字](/static/example-image.svg)
-*这是图片说明文字，用于测试 caption 样式。*
-
-```md
-![本地 SVG 占位图，包含山形图案和 Markdown Image Example 文字](/static/example-image.svg)
-*这是图片说明文字，用于测试 caption 样式。*
-```
-
-## 代码
-
-行内代码效果: `code`
+![Local SVG placeholder with hills and “Markdown Image Example”](/static/example-image.svg)
+*Caption text for image styling tests.*
 
 ```md
-行内代码效果: `code`
+![Local SVG placeholder with hills and “Markdown Image Example”](/static/example-image.svg)
+*Caption text for image styling tests.*
 ```
 
-### 普通代码块
+## Code
+
+Inline code: `code`
+
+```md
+Inline code: `code`
+```
+
+### Plain fence
 
 ```md
 Sample text here...
 ```
 
-### 带标题的代码块
+### Titled block
 
 ```python title="hello.py"
 def greet(name):
@@ -75,7 +75,7 @@ def greet(name):
 ```
 ````
 
-### 带行高亮的代码块
+### Line highlights
 
 ```python title="highlight.py" hl_lines="2 4-5"
 def greet(name):
@@ -93,7 +93,7 @@ def greet(name):
 ```
 ````
 
-### Diff 加减高亮
+### Diff highlights
 
 ```diff title="example.patch"
  function greet(name) {
@@ -111,7 +111,7 @@ def greet(name):
 ```
 `````
 
-### 缩进代码
+### Indented code block
 
 ```
 // Some comments
@@ -127,17 +127,17 @@ line 3 of code
     line 3 of code
 ````
 
-### 嵌套代码围栏
+### Nested fences
 
 ````md
-块级代码
+Outer fence
 
 ```
 Sample text here...
 ```
 ````
 
-### 长代码行
+### Long line
 
 ```bash
 curl "https://example.com/api/articles?category=markdown&tag=markdown&include=metadata,summary,content,links,license&sort=published_at_desc"

@@ -108,5 +108,5 @@ export const TRANSLATIONS = {
 export type Locale = keyof typeof TRANSLATIONS;
 
 export function t(locale: Locale) {
-  return TRANSLATIONS[locale] ?? TRANSLATIONS['zh-CN'];
+  return TRANSLATIONS[locale] ?? TRANSLATIONS.en;
 }
