@@ -9,6 +9,7 @@ import {
   remarkEmoji,
   remarkGfm,
   remarkMath,
+  remarkTableCaptions,
 } from '../plugins/remark-aonote';
 import { remarkStripDuplicateTitle } from '../plugins/remark-strip-duplicate-title';
 import { rehypeAonoteAnchorlink } from '../plugins/rehype-aonote-anchorlink';
@@ -32,6 +33,7 @@ export function aonoteMarkdown(): AstroIntegration {
               remarkAonotePreprocess,
               remarkStripDuplicateTitle,
               remarkGfm,
+              remarkTableCaptions,
               remarkMath,
               remarkDeflist,
               remarkDirective,

@@ -15,7 +15,8 @@ export function remarkAonotePreprocess() {
   return (tree: Root, file: { value?: unknown }) => {
     const source = String(file.value ?? '');
     const processed = preprocessMarkdown(source);
-    if (processed === source) return;
+    const normalize = (value: string) => value.replace(/\s+$/, '');
+    if (normalize(processed) === normalize(source)) return;
 
     const parsed = unified()
       .use(remarkParse)
@@ -29,6 +30,8 @@ export function remarkAonotePreprocess() {
     tree.children = parsed.children;
   };
 }
+
+export { remarkTableCaptions } from './remark-table-captions';
 
 export {
   remarkCodeMeta,

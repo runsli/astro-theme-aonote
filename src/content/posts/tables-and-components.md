@@ -63,16 +63,12 @@ Table: Post list horizontal scroll demo
 
 <details>
 <summary>Show more</summary>
-
 Collapsible content using native HTML `<details>`.
-
 </details>
 
 ```html
 <details>
 <summary>Show more</summary>
-
 Collapsible content using native HTML `<details>`.
-
 </details>
 ```

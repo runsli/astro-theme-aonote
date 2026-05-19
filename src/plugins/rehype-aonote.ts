@@ -4,6 +4,7 @@ import type { Element, Root, ElementContent } from 'hast';
 import type { VFile } from 'vfile';
 import { t, type Locale } from '../i18n';
 import { readImageDimensions, resolveImagePath } from '../utils/image-dimensions';
+import { parseTableCaptionLine } from '../utils/table-caption';
 
 const LANG_LABELS: Record<string, string> = {
   python: 'PYTHON',
@@ -181,29 +182,28 @@ export function wrapTables(tree: Root, locale: Locale) {
     if (index === -1) return;
     if (isElement(parent) && parent.tagName === 'div' && hasClass(parent, 'table-wrapper')) return;
 
-    let captionText: string | undefined;
+    const fromData =
+      node.properties?.dataCaption ??
+      node.properties?.['data-caption'];
+    let captionText = fromData ? String(fromData).trim() : undefined;
     let captionIndex: number | undefined;
-    for (let i = index - 1; i >= 0; i--) {
-      const sib = parent.children[i];
-      if (sib?.type === 'text' && !String(sib.value).trim()) continue;
-      if (sib?.type === 'element' && sib.tagName === 'p') {
-        const text = extractText(sib).trim();
-        for (const prefix of [
-          '表格：',
-          '表：',
-          'Table: ',
-          'Table：',
-          'Caption: ',
-          'Caption：',
-        ]) {
-          if (text.startsWith(prefix)) {
-            captionText = text.slice(prefix.length).trim();
-            if (captionText) captionIndex = i;
-            break;
+
+    if (!captionText) {
+      for (let i = index - 1; i >= 0; i--) {
+        const sib = parent.children[i];
+        if (sib?.type === 'text' && !String(sib.value).trim()) continue;
+        if (sib?.type === 'element' && sib.tagName === 'p') {
+          const text = extractText(sib).trim();
+          if (!text) continue;
+          const parsed = parseTableCaptionLine(text);
+          if (parsed) {
+            captionText = parsed;
+            captionIndex = i;
           }
+          break;
         }
+        break;
       }
-      break;
     }
     if (captionIndex != null) {
       parent.children.splice(captionIndex, 1);
