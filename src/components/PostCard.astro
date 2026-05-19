@@ -17,7 +17,7 @@ const dateStr = formatDate(post.data.date, site.language);
     <a href={url} class="post-title-link">{post.data.title}</a>
   </h2>
   <div class="post-list-meta-line">
-    <span class="meta-date-wrapper meta-date">{dateStr}</span>
+    <span class="meta-date-wrapper">{dateStr}</span>
     {post.data.tags.length > 0 && (
       <div class="tags-wrapper">
         {post.data.tags.map((tag) => (

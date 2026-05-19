@@ -1527,31 +1527,41 @@ main {
 .post-list-meta-line {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
     margin-bottom: var(--space-md);
     font-size: 0.85rem;
+    line-height: 1.4;
     color: var(--color-main-subtext);
 }
 
+.post-list-meta-line .meta-date-wrapper,
 .post-list-item .meta-date {
     font-family: var(--font-mono);
+    font-size: inherit;
+    line-height: 1.4;
     opacity: 0.8;
     margin: 0;
     padding: 0;
     border: none;
     background: none;
-    display: inline;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
     height: auto;
 }
 
+.post-list-item:hover .meta-date-wrapper,
 .post-list-item:hover .meta-date {
     color: var(--color-primary);
     opacity: 1;
 }
 
+.post-list-meta-line .tags-wrapper,
 .post-list-item .tags-list {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-sm);
     padding: 0;
     margin: 0;
@@ -1562,18 +1572,21 @@ main {
     padding: 0;
     margin: 0;
     border: none;
+    display: inline-flex;
+    align-items: center;
 }
 
+.post-list-meta-line .tag-badge,
 .post-list-item .tag-badge {
     font-size: 0.8rem;
     color: var(--color-main-subtext);
     border: none;
     padding: 2px var(--space-sm);
     border-radius: var(--radius-sm);
-    line-height: 1.2;
+    line-height: 1.4;
     height: auto;
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
 }
 
 .post-list-item:hover .tag-badge {
@@ -1615,6 +1628,7 @@ main {
         color: var(--color-link-dark);
     }
 
+    .post-list-item:hover .meta-date-wrapper,
     .post-list-item:hover .meta-date {
         color: var(--color-link-dark);
     }
