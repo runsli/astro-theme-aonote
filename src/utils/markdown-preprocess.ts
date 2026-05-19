@@ -17,15 +17,55 @@ const EMOTICON_EMOJI_MAP: Record<string, string> = {
 const EMOTICON_RE =
   /(?<![\w/])(?<emoticon>8-\)|:-\)|:\)|:-\(|:\(|:-\*|:\*|:\\\*|;\))(?![\w])/g;
 
+const FENCE_OPENING_RE = /^(\s*)(`{3,}|~{3,})([^\n]*)$/;
+
+type FenceState = { inFence: boolean; marker: string; len: number };
+
+function trackFenceLine(line: string, state: FenceState): void {
+  const match = FENCE_OPENING_RE.exec(line);
+  if (!match) return;
+
+  const fence = match[2]!;
+  const info = match[3]!.trim();
+  const marker = fence[0]!;
+
+  if (!state.inFence) {
+    state.inFence = true;
+    state.marker = marker;
+    state.len = fence.length;
+    return;
+  }
+
+  if (marker === state.marker && fence.length >= state.len && !info) {
+    state.inFence = false;
+    state.marker = '';
+    state.len = 0;
+  }
+}
+
+/** True when this line should not be rewritten by admonition preprocessors. */
+function shouldSkipAdmonitionRewrite(line: string, insideFence: boolean): boolean {
+  return insideFence || FENCE_OPENING_RE.test(line);
+}
+
 export function convertColonAdmonitions(markdown: string): string {
   const fenceRe = /^(\s*):{3,}\s*([A-Za-z0-9_-]+)?(?:\s+(.*?))?\s*$/;
   const closeRe = /^\s*:{3,}\s*$/;
   const lines = markdown.split('\n');
   const converted: string[] = [];
+  const fence: FenceState = { inFence: false, marker: '', len: 0 };
   let i = 0;
 
   while (i < lines.length) {
     const line = lines[i]!;
+    const insideFence = fence.inFence;
+    trackFenceLine(line, fence);
+    if (shouldSkipAdmonitionRewrite(line, insideFence)) {
+      converted.push(line);
+      i += 1;
+      continue;
+    }
+
     const startMatch = fenceRe.exec(line);
     if (!startMatch || closeRe.test(line)) {
       converted.push(line);
@@ -68,12 +108,22 @@ export function convertColonAdmonitions(markdown: string): string {
 export function convertAdmonitionsToDirectives(markdown: string): string {
   const lines = markdown.split('\n');
   const out: string[] = [];
+  const fence: FenceState = { inFence: false, marker: '', len: 0 };
   let i = 0;
 
   while (i < lines.length) {
-    const match = /^(\s*)!!!\s+([A-Za-z0-9_-]+)(?:\s+"([^"]*)")?\s*$/.exec(lines[i]!);
+    const line = lines[i]!;
+    const insideFence = fence.inFence;
+    trackFenceLine(line, fence);
+    if (shouldSkipAdmonitionRewrite(line, insideFence)) {
+      out.push(line);
+      i += 1;
+      continue;
+    }
+
+    const match = /^(\s*)!!!\s+([A-Za-z0-9_-]+)(?:\s+"([^"]*)")?\s*$/.exec(line);
     if (!match) {
-      out.push(lines[i]!);
+      out.push(line);
       i += 1;
       continue;
     }
