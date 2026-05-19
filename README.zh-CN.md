@@ -11,6 +11,7 @@
 | --- | --- |
 | **在线演示** | https://astro-theme-aonote.vercel.app |
 | **上游项目** | https://github.com/runsli/Aonote |
+| **项目生态** | [如何选择](docs/ECOSYSTEM.zh-CN.md) · [English](docs/ECOSYSTEM.md) · [完整说明](https://aonote.vercel.app/posts/doc-ecosystem/) |
 
 ## 截图
 

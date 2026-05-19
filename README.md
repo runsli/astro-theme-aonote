@@ -11,6 +11,7 @@ English | [中文](README.zh-CN.md)
 | --- | --- |
 | **Live demo** | https://astro-theme-aonote.vercel.app |
 | **Upstream** | https://github.com/runsli/Aonote |
+| **Ecosystem** | [When to use which](docs/ECOSYSTEM.md) · [中文](docs/ECOSYSTEM.zh-CN.md) · [Full doc](https://aonote.vercel.app/posts/doc-ecosystem/) |
 
 ## Screenshots
 
