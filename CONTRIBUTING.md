@@ -28,7 +28,3 @@ Include:
 - Steps to reproduce
 - Expected vs actual behavior
 - Screenshots if UI-related
-
-## Upstream Aonote
-
-Visual design and Markdown conventions come from [runsli/Aonote](https://github.com/runsli/Aonote). If a change should apply to both projects, consider proposing it upstream first.

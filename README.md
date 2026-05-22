@@ -5,13 +5,12 @@ English | [中文](README.zh-CN.md)
 [![Live Demo](https://img.shields.io/badge/demo-live-0ea5e9)](https://astro-theme-aonote.vercel.app)
 [![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 
-**Astro port of [runsli/Aonote](https://github.com/runsli/Aonote)** — same reading experience and content model, built on [Astro](https://astro.build) 5.
+**Static blog theme for [Astro](https://astro.build) 5** — GFM, MathML math, Shiki code blocks, archive, tags, and RSS/Atom.
 
 | | |
 | --- | --- |
 | **Live demo** | https://astro-theme-aonote.vercel.app |
 | **Upstream** | https://github.com/runsli/Aonote |
-| **Ecosystem** | [When to use which](docs/ECOSYSTEM.md) · [中文](docs/ECOSYSTEM.zh-CN.md) · [Full doc](https://aonote.vercel.app/posts/doc-ecosystem/) |
 
 ## Screenshots
 
@@ -60,7 +59,13 @@ Open http://localhost:4321 and edit:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frunsli%2Fastro-theme-aonote)
 
-After deploy, set `baseUrl` in `src/site.config.ts` to your production URL. See [docs/GITHUB_TEMPLATE.md](docs/GITHUB_TEMPLATE.md) for Vercel/Netlify steps and enabling **GitHub Template repository**.
+1. Import the repo on [Vercel](https://vercel.com/new) or [Netlify](https://app.netlify.com/start) (or use the button above).
+2. **Build:** `npm run build` · **Output:** `dist` (framework preset: Astro).
+3. After deploy, set `baseUrl` in `src/site.config.ts` to your production URL.
+
+`vercel.json` is included (CSP headers). For Netlify: same build command and publish directory.
+
+To fork via GitHub: enable **Template repository** under repo Settings, then **Use this template** or `npm create astro@latest -- --template runsli/astro-theme-aonote`.
 
 ## Customize
 
@@ -72,17 +77,6 @@ After deploy, set `baseUrl` in `src/site.config.ts` to your production URL. See 
 | Theme CSS | `src/styles/aonote.css` |
 | Markdown pipeline | `src/integrations/aonote-markdown.ts` |
 | Feed limits | `src/utils/feed.ts` |
-
-## Upstream mapping
-
-| Upstream (Python) | This repo (Astro) |
-| --- | --- |
-| `config.py` | `src/site.config.ts` |
-| `markdown/` | `src/content/posts/` |
-| `templates/base.html` | `src/layouts/BaseLayout.astro` |
-| `assets/style.css` | `src/styles/aonote.css` |
-| `i18n.py` | `src/i18n.ts` |
-| `_site/` | `dist/` |
 
 ## Project layout
 
@@ -107,14 +101,6 @@ src/
 | `npm run build` | Production build → `dist/` |
 | `npm run preview` | Preview build |
 | `npm run check` | `astro check` |
-
-## Publishing checklist
-
-1. Clean sample content, polish README (this file)
-2. Deploy demo → enable **Template repository** on GitHub ([guide](docs/GITHUB_TEMPLATE.md))
-3. Smoke-test: `npm create astro@latest -- --template runsli/astro-theme-aonote`
-4. Share in Discussions / Discord ([copy-paste text](docs/SHOWCASE.md))
-5. Optional later: [Astro themes](https://astro.build/themes/) or npm package
 
 ## Contributing
 

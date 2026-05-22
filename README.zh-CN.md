@@ -5,13 +5,12 @@
 [![在线演示](https://img.shields.io/badge/演示-在线-0ea5e9)](https://astro-theme-aonote.vercel.app)
 [![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 
-**[runsli/Aonote](https://github.com/runsli/Aonote) 的 Astro 移植版** — 保留原版阅读体验与内容结构，基于 [Astro](https://astro.build) 5。
+基于 **[Astro](https://astro.build) 5** 的静态博客主题 — GFM、MathML 公式、Shiki 代码块、归档、标签与 RSS/Atom。
 
 | | |
 | --- | --- |
 | **在线演示** | https://astro-theme-aonote.vercel.app |
 | **上游项目** | https://github.com/runsli/Aonote |
-| **项目生态** | [如何选择](docs/ECOSYSTEM.zh-CN.md) · [English](docs/ECOSYSTEM.md) · [完整说明](https://aonote.vercel.app/posts/doc-ecosystem/) |
 
 ## 截图
 
@@ -60,7 +59,13 @@ npm run dev
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frunsli%2Fastro-theme-aonote)
 
-部署完成后，将 `src/site.config.ts` 中的 `baseUrl` 改为线上地址。启用 **GitHub 模板仓库** 等步骤见 [docs/GITHUB_TEMPLATE.md](docs/GITHUB_TEMPLATE.md)。
+1. 在 [Vercel](https://vercel.com/new) 或 [Netlify](https://app.netlify.com/start) 导入仓库（或点上方按钮）。
+2. **构建：** `npm run build` · **输出：** `dist`（框架选 Astro）。
+3. 部署完成后，将 `src/site.config.ts` 里的 `baseUrl` 改为线上地址。
+
+已包含 `vercel.json`（CSP 头）。Netlify 使用相同构建命令与发布目录。
+
+若要通过 GitHub 派生：在仓库 **Settings** 中勾选 **Template repository**，再用 **Use this template** 或 `npm create astro@latest -- --template runsli/astro-theme-aonote`。
 
 ## 自定义
 
@@ -73,24 +78,33 @@ npm run dev
 | Markdown 管线 | `src/integrations/aonote-markdown.ts` |
 | 订阅条目数量 | `src/utils/feed.ts` |
 
-## 与上游 Aonote 的对应关系
+## 目录结构
 
-| 原版 (Python) | 本仓库 (Astro) |
+```text
+src/
+├── site.config.ts
+├── content/
+│   ├── posts/          # 文章
+│   └── pages/          # about、404
+├── layouts/
+├── components/
+├── pages/              # 路由
+├── integrations/       # Markdown / Shiki
+└── styles/aonote.css
+```
+
+## 脚本
+
+| 命令 | 说明 |
 | --- | --- |
-| `config.py` | `src/site.config.ts` |
-| `markdown/` | `src/content/posts/` |
-| `templates/base.html` | `src/layouts/BaseLayout.astro` |
-| `assets/style.css` | `src/styles/aonote.css` |
-| `i18n.py` | `src/i18n.ts` |
-| `_site/` | `dist/` |
+| `npm run dev` | 开发服务器 |
+| `npm run build` | 生产构建 → `dist/` |
+| `npm run preview` | 预览构建结果 |
+| `npm run check` | `astro check` |
 
-## 发布清单
+## 参与贡献
 
-1. 清理示例内容、完善 README
-2. 部署演示站 → 在 GitHub 勾选 **Template repository**（[说明](docs/GITHUB_TEMPLATE.md)）
-3. 用 `npm create astro@latest -- --template runsli/astro-theme-aonote` 走一遍新用户路径
-4. 在 Discussions / 社区发帖（[文案](docs/SHOWCASE.md)）
-5. 可选：提交 [Astro 主题列表](https://astro.build/themes/) 或发布 npm 包
+见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 许可
 
