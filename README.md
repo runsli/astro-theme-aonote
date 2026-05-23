@@ -3,9 +3,9 @@
 English | [中文](README.zh-CN.md)
 
 [![Live Demo](https://img.shields.io/badge/demo-live-0ea5e9)](https://astro-theme-aonote.vercel.app)
-[![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
+[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 
-**Static blog theme for [Astro](https://astro.build) 5** — GFM, MathML math, Shiki code blocks, archive, tags, and RSS/Atom.
+**Static blog theme for [Astro](https://astro.build) 6** — GFM, MathML math, Shiki code blocks, archive, tags, and RSS/Atom.
 
 | | |
 | --- | --- |
@@ -53,7 +53,7 @@ Open http://localhost:4321 and edit:
 2. `src/content/posts/` — your Markdown posts
 3. `src/content/pages/about.md` — about page
 
-**Node:** ≥ 18.20.8 (Astro 5). Node 22 LTS is recommended.
+**Node:** ≥ 22.12.0 (Astro 6). Node 22 LTS is recommended.
 
 ## Deploy
 

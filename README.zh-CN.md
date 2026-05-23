@@ -3,9 +3,9 @@
 [English](README.md) | 中文
 
 [![在线演示](https://img.shields.io/badge/演示-在线-0ea5e9)](https://astro-theme-aonote.vercel.app)
-[![Astro](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)](https://astro.build)
+[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 
-基于 **[Astro](https://astro.build) 5** 的静态博客主题 — GFM、MathML 公式、Shiki 代码块、归档、标签与 RSS/Atom。
+基于 **[Astro](https://astro.build) 6** 的静态博客主题 — GFM、MathML 公式、Shiki 代码块、归档、标签与 RSS/Atom。
 
 | | |
 | --- | --- |
@@ -53,7 +53,7 @@ npm run dev
 2. `src/content/posts/` — Markdown 文章
 3. `src/content/pages/about.md` — 关于页
 
-**Node：** ≥ 18.20.8（Astro 5），建议使用 Node 22 LTS。
+**Node：** ≥ 22.12.0（Astro 6），建议使用 Node 22 LTS。
 
 ## 部署
 

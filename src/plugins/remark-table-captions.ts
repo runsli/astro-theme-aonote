@@ -1,5 +1,7 @@
 import { toString } from 'mdast-util-to-string';
-import type { Root } from 'mdast';
+import type { Root, Table } from 'mdast';
+
+type TableData = NonNullable<Table['data']> & { caption?: string };
 import { parseTableCaptionLine } from '../utils/table-caption';
 
 /** Move `Table: …` paragraphs into table `data` so rehype can build `<caption>`. */
@@ -28,10 +30,7 @@ export function remarkTableCaptions() {
 
       if (!caption || removeAt < 0) continue;
 
-      const data = (node.data ?? {}) as {
-        hProperties?: Record<string, unknown>;
-        caption?: string;
-      };
+      const data = (node.data ?? {}) as TableData;
       data.caption = caption;
       data.hProperties = { ...data.hProperties, dataCaption: caption };
       node.data = data;

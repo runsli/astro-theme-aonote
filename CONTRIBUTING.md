@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Requires **Node.js ≥ 18.20.8** (Node 22 LTS recommended).
+Requires **Node.js ≥ 22.12.0** (Node 22 LTS recommended).
 
 ## Pull requests
 
