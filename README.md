@@ -77,6 +77,7 @@ To fork via GitHub: enable **Template repository** under repo Settings, then **U
 | Theme CSS | `src/styles/aonote.css` |
 | Markdown pipeline | `src/integrations/aonote-markdown.ts` |
 | Feed limits | `src/utils/feed.ts` |
+| `robots.txt` / sitemap URL | `src/pages/robots.txt.ts` (uses `site.config.ts`) |
 
 ## Project layout
 

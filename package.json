@@ -3,6 +3,15 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Astro branch of runsli/Aonote — blog theme preserving the original design",
+  "author": "runsli",
+  "homepage": "https://astro-theme-aonote.vercel.app",
+  "bugs": {
+    "url": "https://github.com/runsli/astro-theme-aonote/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/runsli/astro-theme-aonote.git"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "rm -rf .astro && astro build",

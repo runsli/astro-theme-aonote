@@ -77,6 +77,7 @@ npm run dev
 | 主题样式 | `src/styles/aonote.css` |
 | Markdown 管线 | `src/integrations/aonote-markdown.ts` |
 | 订阅条目数量 | `src/utils/feed.ts` |
+| `robots.txt` / Sitemap 地址 | `src/pages/robots.txt.ts`（读取 `site.config.ts`） |
 
 ## 目录结构
 
