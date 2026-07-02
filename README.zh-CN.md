@@ -14,9 +14,9 @@
 
 ## 截图
 
-| 首页 | 文章页（目录、MathML、代码块） |
+| 首页 — 文章列表、标签云、深色/浅色切换 | 文章页 — 目录导航、MathML 公式、代码高亮 |
 | --- | --- |
-| ![首页](docs/screenshots/home.png) | ![文章](docs/screenshots/post.png) |
+| ![首页，展示最新文章、标签云与主题切换](docs/screenshots/home.png) | ![文章页，展示侧边目录、数学公式渲染与语法高亮代码块](docs/screenshots/post.png) |
 
 ## 特性
 

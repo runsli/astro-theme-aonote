@@ -39,12 +39,12 @@ VuePress/VitePress-style `tip` admonition.
 
 ## Images
 
-![Local SVG placeholder with hills and “Markdown Image Example”](/static/example-image.svg)
-*Caption text for image styling tests.*
+![Code syntax highlighting with line numbers, title bar, and highlighted lines](/static/code-example.svg)
+*Fenced code block with syntax highlighting, file title, and line highlights.*
 
 ```md
-![Local SVG placeholder with hills and “Markdown Image Example”](/static/example-image.svg)
-*Caption text for image styling tests.*
+![Code syntax highlighting with line numbers, title bar, and highlighted lines](/static/code-example.svg)
+*Fenced code block with syntax highlighting, file title, and line highlights.*
 ```
 
 ## Code

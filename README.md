@@ -14,9 +14,9 @@ English | [中文](README.zh-CN.md)
 
 ## Screenshots
 
-| Home | Post (TOC, MathML, code) |
+| Homepage — recent posts, tag cloud, dark/light | Post page — TOC, MathML, syntax-highlighted code |
 | --- | --- |
-| ![Home](docs/screenshots/home.png) | ![Post](docs/screenshots/post.png) |
+| ![Homepage showing post list, tags, and theme toggle](docs/screenshots/home.png) | ![Post with table of contents sidebar, math equations, and code blocks](docs/screenshots/post.png) |
 
 ## Features
 

@@ -44,8 +44,8 @@ so the next line stays visually connected.
 
 [Home](/), [Archive](/archive/), and [About](/about/) are internal links. Long URLs such as https://astro-theme-aonote.vercel.app/posts/markdown-basics/ should wrap without breaking the layout.
 
-![Aonote local image example](/static/example-image.svg)
-*A local SVG image with an automatic caption style.*
+![Table of Contents sidebar with scroll-spy](/static/toc-example.svg)
+*Sidebar TOC with hierarchical headings and scroll-spy active highlighting.*
 
 ## Lists
 
@@ -132,6 +132,9 @@ Display math has its own rhythm:
 $$
 \int_0^1 x^2 dx = \frac{1}{3}
 $$
+
+![MathML rendered equations: integral, sum, quadratic formula, and matrix](/static/math-example.svg)
+*Math equations rendered server-side to MathML — no client-side JavaScript needed.*
 
 ## Block quotes
 
