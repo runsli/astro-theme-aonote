@@ -17,6 +17,31 @@ export async function getBlogPosts(): Promise<Post[]> {
 /** @deprecated Use getBlogPosts */
 export const getPublishedPosts = getBlogPosts;
 
+/**
+ * Estimate reading time from raw Markdown body.
+ * CJK characters each count as one "word"; Latin text is split on whitespace.
+ * Code blocks and inline code are stripped before counting.
+ * Returns minutes (min 1).
+ */
+export function readingTime(body: string, locale: string): number {
+  let text = body
+    .replace(/^---[\s\S]*?---/m, '')  // frontmatter
+    .replace(/```[\s\S]*?```/g, '')   // fenced code blocks
+    .replace(/`[^`]*`/g, '')          // inline code
+    .replace(/<[^>]*>/g, '')          // HTML tags
+    .replace(/!\[.*?\]\(.*?\)/g, '')  // images
+    .replace(/\[([^\]]*)\]\(.*?\)/g, '$1'); // links (keep text)
+
+  const cjkRe = /[一-鿿㐀-䶿぀-ゟ゠-ヿ가-힯]/g;
+  const cjkChars = (text.match(cjkRe) || []).length;
+  const latinText = text.replace(cjkRe, '');
+  const latinWords = latinText.split(/[\s\n\r]+/).filter((w) => /\w/.test(w)).length;
+
+  const totalWords = cjkChars + latinWords;
+  const wpm = locale === 'zh-CN' ? 300 : 250;
+  return Math.max(1, Math.ceil(totalWords / wpm));
+}
+
 export function formatDate(date: Date, locale: string): string {
   return date.toLocaleDateString(locale === 'zh-CN' ? 'zh-CN' : 'en-US', {
     year: 'numeric',

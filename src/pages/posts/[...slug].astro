@@ -11,6 +11,7 @@ import {
   getBlogPosts,
   postSlug,
   postUrl,
+  readingTime,
   tagUrl,
   type Post,
 } from '../../utils/posts';
@@ -41,7 +42,10 @@ const tocHeadings = headings.map((h) => ({
   slug: h.slug,
   text: h.text,
 }));
-const hasToc = tocHeadings.some((h) => h.depth >= 1 && h.depth <= 4);
+const tocFiltered = tocHeadings.filter((h) => h.depth >= 1 && h.depth <= 4);
+const hasToc = tocFiltered.length > 0;
+const tocCount = tocFiltered.length;
+const readTime = readingTime(post.body ?? '', site.language);
 ---
 
 <BaseLayout
@@ -64,6 +68,7 @@ const hasToc = tocHeadings.some((h) => h.depth >= 1 && h.depth <= 4);
           <time class="meta-date" datetime={dateIso} itemprop="datePublished dateModified">
             {formatDate(post.data.date, site.language)}
           </time>
+          <span class="meta-reading-time">{i18n.readingTime(readTime)}</span>
           {post.data.tags.length > 0 && (
             <div class="meta-tags">
               <ul class="tags-list">
@@ -80,7 +85,7 @@ const hasToc = tocHeadings.some((h) => h.depth >= 1 && h.depth <= 4);
 
       {hasToc && (
         <details class="mobile-toc">
-          <summary>{i18n.toc}</summary>
+          <summary>{i18n.toc} ({tocCount})</summary>
           <nav class="mobile-toc-content" aria-label={i18n.toc}>
             <TocNav headings={tocHeadings} />
           </nav>
@@ -122,4 +127,39 @@ const hasToc = tocHeadings.some((h) => h.depth >= 1 && h.depth <= 4);
       <TocNav headings={tocHeadings} />
     </nav>
   )}
+
+  <script is:inline>
+    (function tocScrollSpy() {
+      // Match TOC links in both desktop sidebar and mobile dropdown.
+      const tocLinks = document.querySelectorAll('.toc-area a[href^="#"], .mobile-toc-content a[href^="#"]');
+      const headings = Array.from(
+        document.querySelectorAll('.post-content h2[id], .post-content h3[id], .post-content h4[id]')
+      );
+      if (!tocLinks.length || !headings.length) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // Pick the heading closest to the viewport top among intersecting ones.
+          const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
+          if (visible.length === 0) return;
+          const topmost = visible.reduce((a, b) =>
+            Math.abs(a.getBoundingClientRect().top) < Math.abs(b.getBoundingClientRect().top) ? a : b
+          );
+          const id = topmost.getAttribute('id');
+          if (!id) return;
+          tocLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        },
+        {
+          // Fire when heading enters the top ~30 % of the viewport,
+          // accounting for the sticky header.
+          rootMargin: '-100px 0px -70% 0px',
+          threshold: 0,
+        }
+      );
+
+      headings.forEach((h) => observer.observe(h));
+    })();
+  </script>
 </BaseLayout>

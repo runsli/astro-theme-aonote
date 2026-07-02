@@ -412,6 +412,19 @@ main {
         color: var(--color-link-dark);
         background-color: rgba(0, 121, 107, 0.1);
     }
+
+    .toc-area li a.active,
+    .mobile-toc-content li a.active {
+        color: var(--color-link-dark);
+    }
+}
+
+/* Scroll-spy active highlight — desktop & mobile TOC */
+.toc-area li a.active,
+.mobile-toc-content li a.active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    font-weight: 600;
 }
 
 .page-post .toc-area {
@@ -1381,6 +1394,25 @@ main {
         background-color: transparent;
         border-color: transparent;
     }
+}
+
+/* 阅读时间 / Reading time */
+.meta-reading-time {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--color-main-subtext);
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+    opacity: 0.82;
+}
+
+/* Dot separator between date and reading time */
+.meta-reading-time::before {
+    content: "·";
+    margin-right: var(--space-sm);
+    font-weight: 600;
+    color: var(--color-main-subtext);
 }
 
 .meta-tags {

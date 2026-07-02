@@ -44,6 +44,7 @@ export const TRANSLATIONS = {
     footnoteBackrefLabel: (number: string) => `返回脚注 ${number} 的引用位置`,
     taskCompletedLabel: (task: string) => `已完成任务：${task}`,
     taskIncompleteLabel: (task: string) => `未完成任务：${task}`,
+    readingTime: (minutes: number) => `约 ${minutes} 分钟`,
     prevPost: '上一篇 (较新)',
     nextPost: '下一篇 (较旧)',
     copyrightAdditionalNote:
@@ -95,6 +96,7 @@ export const TRANSLATIONS = {
     footnoteBackrefLabel: (number: string) => `Back to footnote ${number} reference`,
     taskCompletedLabel: (task: string) => `Completed task: ${task}`,
     taskIncompleteLabel: (task: string) => `Incomplete task: ${task}`,
+    readingTime: (minutes: number) => `${minutes} min read`,
     prevPost: 'Previous post',
     nextPost: 'Next post',
     copyrightAdditionalNote:
