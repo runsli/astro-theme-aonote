@@ -140,7 +140,7 @@ const readTime = readingTime(post.body ?? '', site.language);
       const observer = new IntersectionObserver(
         (entries) => {
           // Pick the heading closest to the viewport top among intersecting ones.
-          const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
+          const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target);
           if (visible.length === 0) return;
           const topmost = visible.reduce((a, b) =>
             Math.abs(a.getBoundingClientRect().top) < Math.abs(b.getBoundingClientRect().top) ? a : b
