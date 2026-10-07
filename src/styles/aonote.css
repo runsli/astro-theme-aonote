@@ -98,10 +98,17 @@
     --focus-ring-color: var(--color-primary);
     --focus-ring-shadow: 0 0 0 4px rgba(0, 121, 107, 0.16);
 
+    /* emoji 字体族：默认字体栈刻意不引用——emoji 字体覆盖 U+0020 且空格 advance 约 1.245em，
+       会撑坏词间距；而浏览器对 emoji 码点本就会自动回退到系统 emoji 字体。
+       保留此变量仅作为扩展点，供主题使用者按需接入。
+       Emoji font family: deliberately NOT referenced by the default stacks. Emoji fonts
+       cover U+0020 with a ~1.245em advance, which breaks word spacing, and browsers
+       already fall back to the system emoji font on their own. Kept only as an
+       extension point for theme consumers. */
     --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, var(--font-emoji), sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     /* 代码等宽字体族：彻底解决 Windows 宋体问题 Monospace font stack: fixes Windows SimSun fallback for code */
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Segoe UI Mono', 'Liberation Mono', 'Menlo', Monaco, var(--font-emoji), monospace;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Segoe UI Mono', 'Liberation Mono', 'Menlo', Monaco, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
