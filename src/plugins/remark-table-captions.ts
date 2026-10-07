@@ -1,5 +1,8 @@
 import { toString } from 'mdast-util-to-string';
 import type { Root, Table } from 'mdast';
+// Side-effect type import: loads mdast-util-to-hast's `data.hProperties`
+// module augmentation (see remark-code-meta.ts for details).
+import type {} from 'mdast-util-to-hast';
 
 type TableData = NonNullable<Table['data']> & { caption?: string };
 import { parseTableCaptionLine } from '../utils/table-caption';
