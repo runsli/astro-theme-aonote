@@ -9,6 +9,11 @@ export default defineConfig({
   site: site.baseUrl,
   base: site.repoSubpath || undefined,
   trailingSlash: 'always',
+  // Astro 7 changed the default from `true` to 'jsx' (JSX whitespace rules:
+  // whitespace between inline elements is collapsed). This is already the v7
+  // default — stated explicitly to record the intent, so it isn't "fixed" back
+  // to `true` by mistake.
+  compressHTML: 'jsx',
   integrations: [
     aonoteMarkdown(),
     sitemap({
